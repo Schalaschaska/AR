@@ -1,0 +1,23 @@
+﻿<Window x:Class="AR.Editor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AR"
+        mc:Ignorable="d"
+        Title="Editor" Height="350" Width="525">
+    <Grid>
+        <Menu Height="25" VerticalAlignment="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Начальная страница" Click="Start_click"></MenuItem>
+                <MenuItem Header="Выполнение расчёта"></MenuItem>
+                <MenuItem Header="Сохранение"></MenuItem>
+                <MenuItem Header="Загрузка"></MenuItem>
+                <MenuItem Header="Выход"></MenuItem>
+
+            </MenuItem>
+            <MenuItem Header="Вид" ></MenuItem>
+            <MenuItem Header="Настройка"></MenuItem>
+        </Menu>
+    </Grid>
+</Window>

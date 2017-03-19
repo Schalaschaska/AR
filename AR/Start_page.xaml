@@ -1,0 +1,30 @@
+﻿<Window x:Class="AR.Start_page"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AR"
+        mc:Ignorable="d"
+        Title="Start_page" Height="350" Width="525">
+    <Grid>
+        <Menu Height="25" VerticalAlignment="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Начальная страница"></MenuItem>
+                <MenuItem Header="Выполнение расчёта"></MenuItem>
+                <MenuItem Header="Сохранение"></MenuItem>
+                <MenuItem Header="Загрузка"></MenuItem>
+                <MenuItem Header="Выход"></MenuItem>
+
+            </MenuItem>
+            <MenuItem Header="Вид" ></MenuItem>
+            <MenuItem Header="Настройка"></MenuItem>
+        </Menu>
+        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="133" Margin="10,72,0,0" VerticalAlignment="Top" Width="219"/>
+        <Label x:Name="label" Content="Последние" FontSize="20" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Width="168"/>
+        <Label x:Name="label_Copy" Content="Новый расчёт" FontSize="20" HorizontalAlignment="Left" Margin="352,30,0,0" VerticalAlignment="Top" Width="140"/>
+        <ListBox x:Name="listBox1" HorizontalAlignment="Left" Height="133" Margin="326,72,0,0" VerticalAlignment="Top" Width="166">
+            <Button x:Name="button" Content="Button" Width="151" Click="button_Click"/>
+            <Button x:Name="button2" Content="Button" Width="151"/>
+        </ListBox>
+    </Grid>
+</Window>

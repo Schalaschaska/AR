@@ -10,19 +10,28 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace AR
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для Start_page.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Start_page : Window
     {
-        public MainWindow()
+        public Start_page()
         {
             InitializeComponent();
+          
+        }
+        
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            CreateWin createwin = new CreateWin();
+            createwin.Show();
+            this.Close();
+            
+            
         }
     }
 }
