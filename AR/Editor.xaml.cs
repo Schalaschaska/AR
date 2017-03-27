@@ -11,6 +11,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
+using System.Text.RegularExpressions;
+using NetOffice.WordApi.Enums;
+using Microsoft.VisualStudio.TextTemplating.VSHost;
+using System.Globalization;
+using System.Threading;
+
 
 
 namespace AR
@@ -48,6 +55,22 @@ namespace AR
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            
+            NetOffice.WordApi.Application word = new NetOffice.WordApi.Application();
+            word.DisplayAlerts = WdAlertLevel.wdAlertsNone;
+            NetOffice.WordApi.Document newdoc = word.Documents.Add();
+            word.Selection.TypeText("Test text "+textBox.Text);//пока тольео так(
+            
+
+            word.Selection.HomeKey(WdUnits.wdLine, WdMovementType.wdExtend);
+            word.Selection.Font.Color = WdColor.wdColorAqua;
+            word.Selection.Font.Bold = 1;
+            word.Selection.Font.Size = 18;
+            string fileExtension = GetDefaultExtension(word);
+            object documentFile = string.Format("{0}\\Test{1}", Directory.GetCurrentDirectory(), fileExtension);
+            newdoc.SaveAs(documentFile);
+            word.Quit();
+            word.Dispose();
             yi = 2*a * (Ri - R0);
             Vi = Math.Pow((1 + Math.Pow(yi, 2)), -(1 / 2));
             qi = (di * Vi * q) / (36 * di * Math.Pow(Vi, 2));
@@ -55,5 +78,17 @@ namespace AR
             MessageBox.Show(Convert.ToString(qi));
             MessageBox.Show(Convert.ToString(a));
         }
+        #region Helder
+
+        private static string GetDefaultExtension(NetOffice.WordApi.Application application)
+        {
+            double version = Convert.ToDouble(application.Version, CultureInfo.InvariantCulture);
+            if (version >= 12.00)
+                return ".docx";
+            else
+                return ".doc";
+        }
+
+        #endregion
     }
 }

@@ -16,6 +16,7 @@ using System.Text.RegularExpressions;
 using NetOffice.WordApi.Enums;
 using Microsoft.VisualStudio.TextTemplating.VSHost;
 using System.Globalization;
+using System.Threading;
 
 
 
@@ -31,6 +32,7 @@ namespace AR
         public CreateWin()
         {
             InitializeComponent();
+            
 
             
         }
@@ -41,25 +43,18 @@ namespace AR
             Regex Reg_z = new Regex(@"^[a-zA-Z0-9]+$");
             if (Reg_z.IsMatch(textBox.Text))
             {
+                
                 FileStream file = new FileStream("history.txt", FileMode.Append, FileAccess.Write);
                 StreamWriter strem = new StreamWriter(file);
                 strem.WriteLine(textBox.Text);
                 strem.Close();
                 file.Close();
-                NetOffice.WordApi.Application word = new NetOffice.WordApi.Application();
-                word.DisplayAlerts = WdAlertLevel.wdAlertsNone;
-                NetOffice.WordApi.Document newdoc = word.Documents.Add();
-                word.Selection.TypeText("Test text");
-                word.Selection.HomeKey(WdUnits.wdLine, WdMovementType.wdExtend);
-                word.Selection.Font.Color = WdColor.wdColorAqua;
-                word.Selection.Font.Bold = 1;
-                word.Selection.Font.Size = 18;
-                
-
-
+                Directory.CreateDirectory(textBox.Text);
+                Directory.SetCurrentDirectory(textBox.Text);
                 Editor editor = new Editor();
                 editor.Show();
                 this.Close();
+                
             }
             else
             {
@@ -67,17 +62,6 @@ namespace AR
             }
 
         }
-        #region Helder
         
-        private static string GetDefaultExtension(NetOffice.WordApi.Application application)
-        {
-            double version = Convert.ToDouble(application.Version, CultureInfo.InvariantCulture);
-            if (version >= 12.00)
-                return ".docx";
-            else
-                return ".doc";
-        }
-
-        #endregion
     }
 }
