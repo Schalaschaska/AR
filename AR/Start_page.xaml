@@ -20,7 +20,7 @@
             <MenuItem Header="Настройка"></MenuItem>
         </Menu>
         <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="133" Margin="10,72,0,0" VerticalAlignment="Top" Width="219"/>
-        <Label x:Name="label" Content="Последние" FontSize="20" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Width="168"/>
+        <Label x:Name="label" Content="test_text" FontSize="20" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Width="168"/>
         <Label x:Name="label_Copy" Content="Новый расчёт" FontSize="20" HorizontalAlignment="Left" Margin="352,30,0,0" VerticalAlignment="Top" Width="140"/>
         <ListBox x:Name="listBox1" HorizontalAlignment="Left" Height="133" Margin="326,72,0,0" VerticalAlignment="Top" Width="166">
             <Button x:Name="button" Content="Button" Width="151" Click="button_Click"/>
