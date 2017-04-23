@@ -142,6 +142,8 @@
     <Compile Include="Start_page.xaml.cs">
       <DependentUpon>Start_page.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Table_base.cs" />
+    <Compile Include="Table_context.cs" />
     <Page Include="CreateWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

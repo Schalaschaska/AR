@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AR"
         mc:Ignorable="d"
-        Title="Editor" Height="350" Width="525">
-    <Grid>
+        Title="Editor" Height="376.667" Width="525">
+    <Grid Name="Ed_grid">
         <Menu Height="25" VerticalAlignment="Top">
             <MenuItem Header="Файл">
                 <MenuItem Header="Начальная страница" Click="Start_click"></MenuItem>
@@ -20,7 +20,7 @@
             <MenuItem Header="Настройка"></MenuItem>
         </Menu>
         <TextBox x:Name="k_t" HorizontalAlignment="Left" Height="23" Margin="191,53,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="k_s" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="191,87,0,0"/>
+        <TextBox x:Name="k_s" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="191,87,0,0" TextChanged="k_s_TextChanged"/>
         <TextBox x:Name="o_n" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="191,121,0,0"/>
         <TextBox x:Name="p_p" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="191,156,0,0"/>
         <TextBox x:Name="v_r" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="191,191,0,0"/>
@@ -29,8 +29,49 @@
         <Label x:Name="label2" Content="Осевая нагрузка" HorizontalAlignment="Left" Margin="25,121,0,0" VerticalAlignment="Top" Height="30" Width="156"/>
         <Label x:Name="label3" Content="Количество слоёв коронки" HorizontalAlignment="Left" Margin="25,87,0,0" VerticalAlignment="Top" Width="161" Height="29"/>
         <Label x:Name="label4" Content="Внутренний радиус" HorizontalAlignment="Left" Margin="25,191,0,0" VerticalAlignment="Top" Height="30" Width="142"/>
-        <Button x:Name="button" Content="Рассчитать" HorizontalAlignment="Left" Margin="25,240,0,0" VerticalAlignment="Top" Width="78" Height="25" Click="button_Click"/>
-        <RadioButton Content="RadioButton" HorizontalAlignment="Left" Margin="379,53,0,0" VerticalAlignment="Top" Name="n_1"/>
-        <RadioButton Content="RadioButton" HorizontalAlignment="Left" Margin="379,87,0,0" VerticalAlignment="Top" Name="n_2"/>
+        <Button x:Name="button" Content="Рассчитать" HorizontalAlignment="Left" Margin="25,234,0,0" VerticalAlignment="Top" Width="78" Height="25" Click="button_Click"/>
+        <RadioButton Content="Таблица значений" HorizontalAlignment="Left" Margin="325,75,0,0" VerticalAlignment="Top" Name="n_1" Checked="n_1_Checked"/>
+        <RadioButton Content="Единственное значение" HorizontalAlignment="Left" Margin="325,53,0,0" VerticalAlignment="Top" Name="n_2" Checked="n_2_Checked"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="316,105,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="48" Name="n1_1"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="364,105,0,0" TextWrapping="Wrap" Text="36" VerticalAlignment="Top" Width="48" x:Name="n1_2"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="412,105,0,0" TextWrapping="Wrap" Text="0,0011" VerticalAlignment="Top" Width="47" x:Name="n1_3"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="459,105,0,0" TextWrapping="Wrap" Text="0,0240" VerticalAlignment="Top" Width="48" x:Name="n1_4" RenderTransformOrigin="3.681,1.13"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="316,129,0,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Width="48" x:Name="n2_1"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="364,129,0,0" TextWrapping="Wrap" Text="36" VerticalAlignment="Top" Width="48" x:Name="n2_2"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="412,129,0,0" TextWrapping="Wrap" Text="0,0011" VerticalAlignment="Top" Width="47" x:Name="n2_3"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="459,129,0,0" TextWrapping="Wrap" Text="0,02574" VerticalAlignment="Top" Width="48" x:Name="n2_4" RenderTransformOrigin="3.681,1.13"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="316,152,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="48" x:Name="n3_1"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="364,152,0,0" TextWrapping="Wrap" Text="36" VerticalAlignment="Top" Width="48" x:Name="n3_2"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="412,152,0,0" TextWrapping="Wrap" Text="0,0011" VerticalAlignment="Top" Width="47" x:Name="n3_3"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="459,152,0,0" TextWrapping="Wrap" Text="0,02750" VerticalAlignment="Top" Width="48" x:Name="n3_4" RenderTransformOrigin="3.681,1.13"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="316,175,0,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top" Width="48" x:Name="n4_1"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="364,175,0,0" TextWrapping="Wrap" Text="36" VerticalAlignment="Top" Width="48" x:Name="n4_2"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="412,175,0,0" TextWrapping="Wrap" Text="0,0011" VerticalAlignment="Top" Width="47" x:Name="n4_3"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="459,175,0,0" TextWrapping="Wrap" Text="0,02925" VerticalAlignment="Top" Width="48" x:Name="n4_4" RenderTransformOrigin="3.681,1.13"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="316,199,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" Width="48" x:Name="n5_1"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="364,199,0,0" TextWrapping="Wrap" Text="24" VerticalAlignment="Top" Width="48" x:Name="n5_2"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="412,199,0,0" TextWrapping="Wrap" Text="0,0011" VerticalAlignment="Top" Width="47" x:Name="n5_3"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="459,199,0,0" TextWrapping="Wrap" Text="0,031" VerticalAlignment="Top" Width="48" x:Name="n5_4" RenderTransformOrigin="3.681,1.13"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="316,222,0,0" TextWrapping="Wrap" Text="6" VerticalAlignment="Top" Width="48" x:Name="n6_1"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="364,222,0,0" TextWrapping="Wrap" Text="32" VerticalAlignment="Top" Width="48" x:Name="n6_2"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="412,222,0,0" TextWrapping="Wrap" Text="0,0011" VerticalAlignment="Top" Width="47" x:Name="n6_3"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="459,222,0,0" TextWrapping="Wrap" Text="0,03275" VerticalAlignment="Top" Width="48" x:Name="n6_4" RenderTransformOrigin="3.681,1.13"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="316,245,0,0" TextWrapping="Wrap" Text="7" VerticalAlignment="Top" Width="48" x:Name="n7_1"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="364,245,0,0" TextWrapping="Wrap" Text="32" VerticalAlignment="Top" Width="48" x:Name="n7_2"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="412,245,0,0" TextWrapping="Wrap" Text="0,0011" VerticalAlignment="Top" Width="47" x:Name="n7_3"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="459,245,0,0" TextWrapping="Wrap" Text="0,0345" VerticalAlignment="Top" Width="48" x:Name="n7_4" RenderTransformOrigin="3.681,1.13"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="316,268,0,0" TextWrapping="Wrap" Text="8" VerticalAlignment="Top" Width="48" x:Name="n8_1"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="364,268,0,0" TextWrapping="Wrap" Text="32" VerticalAlignment="Top" Width="48" x:Name="n8_2"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="412,268,0,0" TextWrapping="Wrap" Text="0,0011" VerticalAlignment="Top" Width="47" x:Name="n8_3"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="459,268,0,0" TextWrapping="Wrap" Text="0,03625" VerticalAlignment="Top" Width="48" x:Name="n8_4" RenderTransformOrigin="3.681,1.13"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="316,292,0,0" TextWrapping="Wrap" Text="9" VerticalAlignment="Top" Width="48" x:Name="n9_1"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="364,292,0,0" TextWrapping="Wrap" Text="32" VerticalAlignment="Top" Width="48" x:Name="n9_2"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="412,292,0,0" TextWrapping="Wrap" Text="0,0011" VerticalAlignment="Top" Width="47" x:Name="n9_3"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="459,292,0,0" TextWrapping="Wrap" Text="0,038" VerticalAlignment="Top" Width="48" x:Name="n9_4" RenderTransformOrigin="3.681,1.13"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="191,292,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name="H_t"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="191,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name="Ri_t" TextChanged="Ri_t_TextChanged"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="191,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name="Rn_t" TextChanged="Rn_t_TextChanged"/>
+        <Button Content="Save" HorizontalAlignment="Left" Margin="25,268,0,0" VerticalAlignment="Top" Width="78" Height="25" Click="Button_Click_1"/>
+
     </Grid>
 </Window>
