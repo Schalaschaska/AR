@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AR"
         mc:Ignorable="d"
-        Title="Editor" Height="376.667" Width="525">
+        Title="Editor" Height="388.667" Width="550.333">
     <Grid Name="Ed_grid">
         <Menu Height="25" VerticalAlignment="Top">
             <MenuItem Header="Файл">
@@ -72,6 +72,7 @@
         <TextBox HorizontalAlignment="Left" Height="23" Margin="191,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name="Ri_t" TextChanged="Ri_t_TextChanged"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="191,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name="Rn_t" TextChanged="Rn_t_TextChanged"/>
         <Button Content="Save" HorizontalAlignment="Left" Margin="25,268,0,0" VerticalAlignment="Top" Width="78" Height="25" Click="Button_Click_1"/>
+        <Button Content="Load" HorizontalAlignment="Left" Margin="25,300,0,0" VerticalAlignment="Top" Width="78" Height="25" Click="Button_Click_2"/>
 
     </Grid>
 </Window>

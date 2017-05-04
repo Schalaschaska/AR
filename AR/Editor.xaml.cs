@@ -17,9 +17,9 @@ using NetOffice.WordApi.Enums;
 using Microsoft.VisualStudio.TextTemplating.VSHost;
 using System.Globalization;
 using System.Threading;
-
-
-
+using System.Data.Entity;
+using System.ComponentModel;
+using System.Data;
 
 namespace AR
 {
@@ -52,7 +52,9 @@ namespace AR
         int[] KI = new int[] { 36, 36, 36, 36, 24, 32, 32, 32, 32 };
         double pr_sum = 0;
         double max;
-    private void Start_click(object sender, RoutedEventArgs e)
+        public bool save_flag;
+        int[] myArr = new int[] {  };
+        private void Start_click(object sender, RoutedEventArgs e)
         {
             
             Start_page start_page = new Start_page();
@@ -105,8 +107,6 @@ namespace AR
                     word.Quit();
                     word.Dispose();*/
 
-                    if (n_1.IsChecked == true)
-                    {
                         List<double> KI_list_2 = new List<double> { };
                         List<double> DI_list_2 = new List<double> { };
                         List<double> RI_list_2 = new List<double> { };
@@ -153,7 +153,7 @@ namespace AR
 
                             Ri = Ri + H;
                             RI_list.Add(Ri);
-                            //MessageBox.Show(Convert.ToString(Ri));
+                            MessageBox.Show(Convert.ToString(Ri));
 
                         }
                         double[] RI = RI_list.ToArray<double>();
@@ -180,71 +180,20 @@ namespace AR
                         {
                             qi = (di * VI[i] * q) / pr_sum;
                             QI_list.Add(qi);
+                            
                         }
                         double[] QI = QI_list.ToArray<double>();
                         for (int i = 0; i <= QI.Length - 1; i++)
                         {
                             A = A = 2 * 3.141593 * f * QI[i] * RI[i];
                             AI_list.Add(A);
+                            //MessageBox.Show(Convert.ToString(QI[i]));
                         }
                         double[] AI = AI_list.ToArray<double>();
                         max = AI.Max();
-                        MessageBox.Show(Convert.ToString(max));
+                        //MessageBox.Show(Convert.ToString(max));
 
-                    }
-                    /*if (n_2.IsChecked == true)
-                    {
-                        List<double> KI_list = new List<double> { };
-                        List<double> DI_list = new List<double> { };
-                        List<double> RI_list = new List<double> { };
-                        KI_list.Add(Convert.ToDouble(n1_2.Text));
-                        KI_list.Add(Convert.ToDouble(n2_2.Text));
-                        KI_list.Add(Convert.ToDouble(n3_2.Text));
-                        KI_list.Add(Convert.ToDouble(n4_2.Text));
-                        KI_list.Add(Convert.ToDouble(n5_2.Text));
-                        KI_list.Add(Convert.ToDouble(n6_2.Text));
-                        KI_list.Add(Convert.ToDouble(n7_2.Text));
-                        KI_list.Add(Convert.ToDouble(n8_2.Text));
-                        KI_list.Add(Convert.ToDouble(n9_2.Text));
-                        DI_list.Add(Convert.ToDouble(n1_3.Text));
-                        DI_list.Add(Convert.ToDouble(n2_3.Text));
-                        DI_list.Add(Convert.ToDouble(n3_3.Text));
-                        DI_list.Add(Convert.ToDouble(n4_3.Text));
-                        DI_list.Add(Convert.ToDouble(n5_3.Text));
-                        DI_list.Add(Convert.ToDouble(n6_3.Text));
-                        DI_list.Add(Convert.ToDouble(n7_3.Text));
-                        DI_list.Add(Convert.ToDouble(n8_3.Text));
-                        DI_list.Add(Convert.ToDouble(n9_3.Text));
-                        RI_list.Add(Convert.ToDouble(n1_4.Text));
-                        RI_list.Add(Convert.ToDouble(n2_4.Text));
-                        RI_list.Add(Convert.ToDouble(n3_4.Text));
-                        RI_list.Add(Convert.ToDouble(n4_4.Text));
-                        RI_list.Add(Convert.ToDouble(n5_4.Text));
-                        RI_list.Add(Convert.ToDouble(n6_4.Text));
-                        RI_list.Add(Convert.ToDouble(n7_4.Text));
-                        RI_list.Add(Convert.ToDouble(n8_4.Text));
-                        RI_list.Add(Convert.ToDouble(n9_4.Text));
-                        double[] KI = KI_list.ToArray<double>();
-                        double[] DI = DI_list.ToArray<double>();
-                        double[] RI = RI_list.ToArray<double>();
-                        for (int i = 0; i <= n - 1; i++)
-                        {
-                            yi = 2 * a * (RI[i] - R0);
-                        }
-
-                        Vi = Math.Pow((1 + Math.Pow(yi, 2)), -(1 / 2));
-                        for (int i = 0; i <= n - 1; i++)
-                        {
-                            pr_sum = pr_sum + (KI[i] * DI[i] * Math.Pow(Vi, 2));
-                        }
-                        for (int i = 0; i <= n - 1; i++)
-                        {
-                            qi = (DI[i] * Vi * q) / pr_sum;
-                        }
-                        A = 2 * 3.141593 * f * qi * Ri;
-                        MessageBox.Show(Convert.ToString(qi));
-                        MessageBox.Show(Convert.ToString(A));
-                    }*/
+                    
                 }
             }
         }
@@ -265,6 +214,9 @@ namespace AR
         {
             if(k_s.Text=="1")
             {
+                
+                
+
                 n2_1.Visibility = Visibility.Hidden;
                 n2_2.Visibility = Visibility.Hidden;
                 n2_3.Visibility = Visibility.Hidden;
@@ -608,18 +560,98 @@ namespace AR
         {   
             using (Table_context db = new Table_context())
             {
-                Table_base n1 = new Table_base { t1_1 = Convert.ToDouble(n1_1.Text) };
-                
+                Table_base n1 = new Table_base { t1_1 = Convert.ToDouble(n1_1.Text),t1_2=Convert.ToDouble(n1_2.Text),t1_3=Convert.ToDouble(n1_3.Text),t1_4=Convert.ToDouble(n1_4.Text),
+                t2_1 = Convert.ToDouble(n2_1.Text),t2_2 = Convert.ToDouble(n2_2.Text),t2_3 = Convert.ToDouble(n2_3.Text),t2_4 = Convert.ToDouble(n2_4.Text),
+                t3_1 = Convert.ToDouble(n3_1.Text),t3_2 = Convert.ToDouble(n3_2.Text),t3_3 = Convert.ToDouble(n3_3.Text),t3_4 = Convert.ToDouble(n3_4.Text),
+                t4_1 = Convert.ToDouble(n4_1.Text),t4_2 = Convert.ToDouble(n4_2.Text),t4_3 = Convert.ToDouble(n4_3.Text),t4_4 = Convert.ToDouble(n4_4.Text),
+                t5_1 = Convert.ToDouble(n5_1.Text),t5_2 = Convert.ToDouble(n5_2.Text),t5_3 = Convert.ToDouble(n5_3.Text),t5_4 = Convert.ToDouble(n5_4.Text),
+                t6_1 = Convert.ToDouble(n6_1.Text),t6_2 = Convert.ToDouble(n6_2.Text),t6_3 = Convert.ToDouble(n6_3.Text),t6_4 = Convert.ToDouble(n6_4.Text),
+                t7_1 = Convert.ToDouble(n7_1.Text),t7_2 = Convert.ToDouble(n7_2.Text),t7_3 = Convert.ToDouble(n7_3.Text),t7_4 = Convert.ToDouble(n7_4.Text),
+                t8_1 = Convert.ToDouble(n8_1.Text),t8_2 = Convert.ToDouble(n8_2.Text),t8_3 = Convert.ToDouble(n8_3.Text),t8_4 = Convert.ToDouble(n8_4.Text),
+                t9_1 = Convert.ToDouble(n9_1.Text),t9_2 = Convert.ToDouble(n9_2.Text),t9_3 = Convert.ToDouble(n9_3.Text),t9_4 = Convert.ToDouble(n9_4.Text)};
+               
                 db.table.Add(n1);
+              
                 db.SaveChanges();
+                if (save_flag == true)
+                {
+                    Table_base p1 = db.table.FirstOrDefault();
+                    
+                    
+                    if (p1 != null)
+                    {
+                        db.table.Remove(p1);
+                        db.SaveChanges();
+                    }
+                }
+            }
+            
+        }
 
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            
+            using (Table_context db = new Table_context())
+            {
+                
                 var Table = db.table;
                 foreach (Table_base u in Table)
                 {
-                    MessageBox.Show(Convert.ToString(u.t1_1));
-                    db.table.Remove(n1);
+
+                    n1_1.Text = Convert.ToString(u.t1_1);n1_2.Text = Convert.ToString(u.t1_2);n1_3.Text = Convert.ToString(u.t1_3);n1_4.Text = Convert.ToString(u.t1_4);
+                    n2_1.Text = Convert.ToString(u.t2_1);n2_2.Text = Convert.ToString(u.t2_2);n2_3.Text = Convert.ToString(u.t2_3);n2_4.Text = Convert.ToString(u.t2_4);
+                    n3_1.Text = Convert.ToString(u.t3_1);n3_2.Text = Convert.ToString(u.t3_2);n3_3.Text = Convert.ToString(u.t3_3);n3_4.Text = Convert.ToString(u.t3_4);
+                    n4_1.Text = Convert.ToString(u.t4_1); n4_2.Text = Convert.ToString(u.t4_2); n4_3.Text = Convert.ToString(u.t4_3); n4_4.Text = Convert.ToString(u.t4_4);
+                    n5_1.Text = Convert.ToString(u.t5_1); n5_2.Text = Convert.ToString(u.t5_2); n5_3.Text = Convert.ToString(u.t5_3); n5_4.Text = Convert.ToString(u.t5_4);
+                    n6_1.Text = Convert.ToString(u.t6_1); n6_2.Text = Convert.ToString(u.t6_2); n6_3.Text = Convert.ToString(u.t6_3); n6_4.Text = Convert.ToString(u.t6_4);
+                    n7_1.Text = Convert.ToString(u.t7_1); n7_2.Text = Convert.ToString(u.t7_2); n7_3.Text = Convert.ToString(u.t7_3); n7_4.Text = Convert.ToString(u.t7_4);
+                    n8_1.Text = Convert.ToString(u.t8_1); n8_2.Text = Convert.ToString(u.t8_2); n8_3.Text = Convert.ToString(u.t8_3); n8_4.Text = Convert.ToString(u.t8_4);
+                    n9_1.Text = Convert.ToString(u.t9_1); n9_2.Text = Convert.ToString(u.t9_2); n9_3.Text = Convert.ToString(u.t9_3); n9_4.Text = Convert.ToString(u.t9_4);
+
+
                 }
+                save_flag = true;
+              
+
             }
+                
+            
         }
+
+      
+        /*
+private void grid_Loaded(object sender, RoutedEventArgs e)
+{
+   List<Table_content> result = new List<Table_content>(8);
+
+   result.Add(new Table_content(1, 36, 0.0011, 0.0240));
+   result.Add(new Table_content(2, 36, 0.0011, 0.02574));
+   result.Add(new Table_content(3, 36, 0.0011, 0.2750));
+   result.Add(new Table_content(4, 36, 0.0011, 0.02925));
+   result.Add(new Table_content(5, 24, 0.0011, 0.031));
+   result.Add(new Table_content(6, 32, 0.0011, 0.03275));
+   result.Add(new Table_content(7, 32, 0.0011, 0.0345));
+   result.Add(new Table_content(8, 32, 0.0011, 0.03625));
+   result.Add(new Table_content(9, 32, 0.0011, 0.038));
+   grid.ItemsSource = result;
+   int parse = grid.SelectedIndex;
+   DataRowView rowView = grid.SelectedValue as DataRowView;
+
+
+}
+
+private void Button_Click_3(object sender, RoutedEventArgs e)
+{
+   Table_cell cell = new Table_cell();
+   string a;
+
+   a =Convert.ToString(cell.FindCell(0, 3, grid));
+   a = a.Substring(a.IndexOf(':') + 1);
+   MessageBox.Show(a);
+
+
+
+}*/
+
     }
 }

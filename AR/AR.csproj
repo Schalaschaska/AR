@@ -143,6 +143,8 @@
       <DependentUpon>Start_page.xaml</DependentUpon>
     </Compile>
     <Compile Include="Table_base.cs" />
+    <Compile Include="Table_cell.cs" />
+    <Compile Include="Table_content.cs" />
     <Compile Include="Table_context.cs" />
     <Page Include="CreateWin.xaml">
       <SubType>Designer</SubType>
