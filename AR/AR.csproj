@@ -139,6 +139,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Rezult.xaml.cs">
+      <DependentUpon>Rezult.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Start_page.xaml.cs">
       <DependentUpon>Start_page.xaml</DependentUpon>
     </Compile>
@@ -164,6 +167,10 @@
     <Compile Include="Editor.xaml.cs">
       <DependentUpon>Editor.xaml</DependentUpon>
     </Compile>
+    <Page Include="Rezult.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Start_page.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

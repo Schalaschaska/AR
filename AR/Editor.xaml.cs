@@ -35,7 +35,7 @@ namespace AR
         }
         public double yi;//Уравнения профиля коронки
         public double Vi=0;
-        public double di= 0.0011;
+        public double di=0;
         public double ai=0;
         public double a=40.1;
         public double q;
@@ -46,8 +46,10 @@ namespace AR
         public double Ki=0;
         public double f;
         public int n;
-        double H;
+        public double H;
         public double A;
+        public int kol_e;
+        public double[] RI_rez;
         //double[] Di = new double[] { 0.0240, 0.02574, 0.02750, 0.02925, 0.031, 0.03275, 0.0345, 0.03625, 0.038 };
         int[] KI = new int[] { 36, 36, 36, 36, 24, 32, 32, 32, 32 };
         double pr_sum = 0;
@@ -80,7 +82,7 @@ namespace AR
                 H = Convert.ToDouble(H_t.Text);
 
 
-                if (Convert.ToDouble(n2_4.Text) <= (Convert.ToDouble(n1_4.Text)) ||
+                if(Convert.ToDouble(n2_4.Text) <= (Convert.ToDouble(n1_4.Text)) ||
                   (Convert.ToDouble(n3_4.Text) <= (Convert.ToDouble(n2_4.Text)) ||
                   (Convert.ToDouble(n4_4.Text) <= (Convert.ToDouble(n3_4.Text)) ||
                   (Convert.ToDouble(n5_4.Text) <= (Convert.ToDouble(n4_4.Text)) ||
@@ -147,56 +149,86 @@ namespace AR
                         List<double> AI_list = new List<double> { };
                         List<double> Sum_list = new List<double> { };
                         
-                        RI_list.Add(Ri);
-                        while (Ri < Convert.ToDouble(n9_4.Text))
+                        RI_list.Add(Convert.ToDouble(n1_4.Text));
+                        while (Ri <= Convert.ToDouble(n9_4.Text))
                         {
 
                             Ri = Ri + H;
                             RI_list.Add(Ri);
-                            MessageBox.Show(Convert.ToString(Ri));
+                        
+                            //kol_e++;
+                            //MessageBox.Show(Convert.ToString(Ri));
 
                         }
                         double[] RI = RI_list.ToArray<double>();
-                        for (int i = 0; i <= RI.Length - 1; i++)
+                        
+                        for (int i = 0; i <= n - 1; i++)
                         {
-                            yi = 2 * a * (RI[i] - R0);
+                            yi = 2 * a * (RI_2[i] - R0);
                             YI_list.Add(yi);
-                            //MessageBox.Show(Convert.ToString(RI[i]));
 
                         }
                         double[] YI = YI_list.ToArray<double>();
-                        for (int i = 0; i <= YI.Length - 1; i++)
+
+                  
+
+
+                    for (int i = 0; i <= n - 1; i++)
                         {
-                            Vi = Math.Pow((1 + Math.Pow(YI[i], 2)), -(1 / 2));
-                            VI_list.Add(Vi);
+                        Vi = Math.Pow((1 + Math.Pow(YI[i], 2)), -(1 / 2));
+                        VI_list.Add(Vi);
+                        //MessageBox.Show(Convert.ToString(YI[i]));
                         }
                         double[] VI = VI_list.ToArray<double>();
-                        for (int i = 0; i <= n-1; i++)
+                   
+
+                    for (int i = 0; i <= n-1; i++)
                         {
-                            pr_sum = pr_sum + (KI[i] * di * Math.Pow(VI[i], 2));
+                            pr_sum = pr_sum + (KI_2[i] * DI_2[i] * Math.Pow(VI[i], 2));
 
                         }
+                    //MessageBox.Show(Convert.ToString(pr_sum));
                         for (int i = 0; i <= VI.Length - 1; i++)
                         {
-                            qi = (di * VI[i] * q) / pr_sum;
+                            qi = (DI_2[i] * VI[i] * q) / pr_sum;
                             QI_list.Add(qi);
                             
                         }
                         double[] QI = QI_list.ToArray<double>();
-                        for (int i = 0; i <= QI.Length - 1; i++)
+                        for (int i = 0; i <= RI.Length - 1; i++)
                         {
-                            A = A = 2 * 3.141593 * f * QI[i] * RI[i];
+                     
+                            A = A = 2 * 3.141593 * f * QI[0] * RI[i];
                             AI_list.Add(A);
-                            //MessageBox.Show(Convert.ToString(QI[i]));
+                           // MessageBox.Show(Convert.ToString(QI[i]));
                         }
                         double[] AI = AI_list.ToArray<double>();
-                        max = AI.Max();
-                        //MessageBox.Show(Convert.ToString(max));
+                       max = AI.Max();
+                    for(int i=0;i<=RI.Length-1;i++)
+                    {
+                        MessageBox.Show(Convert.ToString(AI[i]));
+                    }
+                    max = AI.Max();
+                    MessageBox.Show(Convert.ToString(max));
+                    using (Table_context db = new Table_context())
+                    {
+
+                    }
+                        //MessageBox.Show(Convert.ToString(kol_e));
+                        /*Array.Copy(RI, RI_rez = new double[RI.Length - 1], RI.Length - 1);*/
+                    /*Rezult w = new Rezult();
+                    w.ShowDialog();*/
 
                     
                 }
             }
         }
+       
+        
+
+
+
+
         #region Helder
 
         private static string GetDefaultExtension(NetOffice.WordApi.Application application)
@@ -560,18 +592,18 @@ namespace AR
         {   
             using (Table_context db = new Table_context())
             {
-                Table_base n1 = new Table_base { t1_1 = Convert.ToDouble(n1_1.Text),t1_2=Convert.ToDouble(n1_2.Text),t1_3=Convert.ToDouble(n1_3.Text),t1_4=Convert.ToDouble(n1_4.Text),
-                t2_1 = Convert.ToDouble(n2_1.Text),t2_2 = Convert.ToDouble(n2_2.Text),t2_3 = Convert.ToDouble(n2_3.Text),t2_4 = Convert.ToDouble(n2_4.Text),
-                t3_1 = Convert.ToDouble(n3_1.Text),t3_2 = Convert.ToDouble(n3_2.Text),t3_3 = Convert.ToDouble(n3_3.Text),t3_4 = Convert.ToDouble(n3_4.Text),
-                t4_1 = Convert.ToDouble(n4_1.Text),t4_2 = Convert.ToDouble(n4_2.Text),t4_3 = Convert.ToDouble(n4_3.Text),t4_4 = Convert.ToDouble(n4_4.Text),
-                t5_1 = Convert.ToDouble(n5_1.Text),t5_2 = Convert.ToDouble(n5_2.Text),t5_3 = Convert.ToDouble(n5_3.Text),t5_4 = Convert.ToDouble(n5_4.Text),
-                t6_1 = Convert.ToDouble(n6_1.Text),t6_2 = Convert.ToDouble(n6_2.Text),t6_3 = Convert.ToDouble(n6_3.Text),t6_4 = Convert.ToDouble(n6_4.Text),
-                t7_1 = Convert.ToDouble(n7_1.Text),t7_2 = Convert.ToDouble(n7_2.Text),t7_3 = Convert.ToDouble(n7_3.Text),t7_4 = Convert.ToDouble(n7_4.Text),
-                t8_1 = Convert.ToDouble(n8_1.Text),t8_2 = Convert.ToDouble(n8_2.Text),t8_3 = Convert.ToDouble(n8_3.Text),t8_4 = Convert.ToDouble(n8_4.Text),
-                t9_1 = Convert.ToDouble(n9_1.Text),t9_2 = Convert.ToDouble(n9_2.Text),t9_3 = Convert.ToDouble(n9_3.Text),t9_4 = Convert.ToDouble(n9_4.Text)};
-               
+                    Table_base n1 = new Table_base { t1_1 = Convert.ToDouble(n1_1.Text), t1_2 = Convert.ToDouble(n1_2.Text), t1_3 = Convert.ToDouble(n1_3.Text), t1_4 = Convert.ToDouble(n1_4.Text),
+                    t2_1 = Convert.ToDouble(n2_1.Text), t2_2 = Convert.ToDouble(n2_2.Text), t2_3 = Convert.ToDouble(n2_3.Text), t2_4 = Convert.ToDouble(n2_4.Text),
+                    t3_1 = Convert.ToDouble(n3_1.Text), t3_2 = Convert.ToDouble(n3_2.Text), t3_3 = Convert.ToDouble(n3_3.Text), t3_4 = Convert.ToDouble(n3_4.Text),
+                    t4_1 = Convert.ToDouble(n4_1.Text), t4_2 = Convert.ToDouble(n4_2.Text), t4_3 = Convert.ToDouble(n4_3.Text), t4_4 = Convert.ToDouble(n4_4.Text),
+                    t5_1 = Convert.ToDouble(n5_1.Text), t5_2 = Convert.ToDouble(n5_2.Text), t5_3 = Convert.ToDouble(n5_3.Text), t5_4 = Convert.ToDouble(n5_4.Text),
+                    t6_1 = Convert.ToDouble(n6_1.Text), t6_2 = Convert.ToDouble(n6_2.Text), t6_3 = Convert.ToDouble(n6_3.Text), t6_4 = Convert.ToDouble(n6_4.Text),
+                    t7_1 = Convert.ToDouble(n7_1.Text), t7_2 = Convert.ToDouble(n7_2.Text), t7_3 = Convert.ToDouble(n7_3.Text), t7_4 = Convert.ToDouble(n7_4.Text),
+                    t8_1 = Convert.ToDouble(n8_1.Text), t8_2 = Convert.ToDouble(n8_2.Text), t8_3 = Convert.ToDouble(n8_3.Text), t8_4 = Convert.ToDouble(n8_4.Text),
+                    t9_1 = Convert.ToDouble(n9_1.Text), t9_2 = Convert.ToDouble(n9_2.Text), t9_3 = Convert.ToDouble(n9_3.Text), t9_4 = Convert.ToDouble(n9_4.Text),
+                    k_t_base = Convert.ToDouble(k_t.Text), k_s_base = Convert.ToDouble(k_s.Text), o_s_base = Convert.ToDouble(o_n.Text), p_p_base = Convert.ToDouble(p_p.Text), v_r_base = Convert.ToDouble(v_r.Text),
+                    ri_base = Convert.ToDouble(Ri_t.Text), rn_base = Convert.ToDouble(Rn_t.Text), h_base = Convert.ToDouble(H_t.Text)};
                 db.table.Add(n1);
-              
                 db.SaveChanges();
                 if (save_flag == true)
                 {
@@ -607,7 +639,8 @@ namespace AR
                     n7_1.Text = Convert.ToString(u.t7_1); n7_2.Text = Convert.ToString(u.t7_2); n7_3.Text = Convert.ToString(u.t7_3); n7_4.Text = Convert.ToString(u.t7_4);
                     n8_1.Text = Convert.ToString(u.t8_1); n8_2.Text = Convert.ToString(u.t8_2); n8_3.Text = Convert.ToString(u.t8_3); n8_4.Text = Convert.ToString(u.t8_4);
                     n9_1.Text = Convert.ToString(u.t9_1); n9_2.Text = Convert.ToString(u.t9_2); n9_3.Text = Convert.ToString(u.t9_3); n9_4.Text = Convert.ToString(u.t9_4);
-
+                    Ri_t.Text = Convert.ToString(u.ri_base);Rn_t.Text = Convert.ToString(u.rn_base);H_t.Text = Convert.ToString(u.h_base);k_t.Text = Convert.ToString(u.k_t_base);
+                    k_s.Text = Convert.ToString(u.k_s_base);o_n.Text = Convert.ToString(u.o_s_base);p_p.Text = Convert.ToString(u.p_p_base);v_r.Text=Convert.ToString(u.v_r_base) ;
 
                 }
                 save_flag = true;

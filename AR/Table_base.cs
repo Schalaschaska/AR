@@ -61,7 +61,18 @@ namespace AR
         public double t9_2 { get; set; }
         public double t9_3 { get; set; }
         public double t9_4 { get; set; }
+        public double k_t_base { get; set; }
+        public double k_s_base { get; set; }
+        public double o_s_base { get; set; }
+        public double p_p_base { get; set; }
+        public double v_r_base { get; set; }
+        public double ri_base { get; set; }
+        public double rn_base { get; set; }
+        public double h_base { get; set; }
+        public double[] RI_base { get; set; }
+        public int kol { get; set; }
 
-        
+
+
     }
 }
