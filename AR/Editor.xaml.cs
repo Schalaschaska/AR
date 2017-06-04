@@ -46,13 +46,15 @@ namespace AR
         public double Ki=0;
         public double f;
         public int n;
+        public int pr_n = 0;
+        public double pr_sum = 0;
         public double H;
         public double A;
         public int kol_e;
         public double[] RI_rez;
         //double[] Di = new double[] { 0.0240, 0.02574, 0.02750, 0.02925, 0.031, 0.03275, 0.0345, 0.03625, 0.038 };
         int[] KI = new int[] { 36, 36, 36, 36, 24, 32, 32, 32, 32 };
-        double pr_sum = 0;
+        double pr_sum_2 = 0;
         double max;
         public bool save_flag;
         int[] myArr = new int[] {  };
@@ -95,19 +97,7 @@ namespace AR
                 }
                 else
                 {
-                    /*NetOffice.WordApi.Application word = new NetOffice.WordApi.Application();
-                    word.DisplayAlerts = WdAlertLevel.wdAlertsNone;
-                    NetOffice.WordApi.Document newdoc = word.Documents.Add();
-                    word.Selection.TypeText("Test text "+textBox.Text);//пока только так(
-                    word.Selection.HomeKey(WdUnits.wdLine, WdMovementType.wdExtend);
-                    word.Selection.Font.Color = WdColor.wdColorAqua;//тистим цвет
-                    word.Selection.Font.Bold = 1;
-                    word.Selection.Font.Size = 18;
-                    string fileExtension = GetDefaultExtension(word);//проверка версии
-                    object documentFile = string.Format("{0}\\Test{1}", Directory.GetCurrentDirectory(), fileExtension);
-                    newdoc.SaveAs(documentFile);
-                    word.Quit();
-                    word.Dispose();*/
+                    
 
                         List<double> KI_list_2 = new List<double> { };
                         List<double> DI_list_2 = new List<double> { };
@@ -162,64 +152,66 @@ namespace AR
                         }
                         double[] RI = RI_list.ToArray<double>();
                         
-                        for (int i = 0; i <= n - 1; i++)
+                        for (int i = 0; i <= RI.Length-1; i++)
                         {
-                            yi = 2 * a * (RI_2[i] - R0);
+                            yi = 2 * a * (RI[i] - R0);
                             YI_list.Add(yi);
+                       
 
                         }
                         double[] YI = YI_list.ToArray<double>();
 
                   
 
-
-                    for (int i = 0; i <= n - 1; i++)
+                    for (int i = 0; i <= RI.Length-1; i++)
                         {
-                        Vi = Math.Pow((1 + Math.Pow(YI[i], 2)), -(1 / 2));
+
+                        Vi = 1 / (Math.Sqrt(1 + YI[i] * YI[i]));
                         VI_list.Add(Vi);
                         //MessageBox.Show(Convert.ToString(YI[i]));
                         }
                         double[] VI = VI_list.ToArray<double>();
                    
-
+                
                     for (int i = 0; i <= n-1; i++)
                         {
+                        
                             pr_sum = pr_sum + (KI_2[i] * DI_2[i] * Math.Pow(VI[i], 2));
+                            pr_n++;
 
                         }
-                    //MessageBox.Show(Convert.ToString(pr_sum));
-                        for (int i = 0; i <= VI.Length - 1; i++)
-                        {
-                            qi = (DI_2[i] * VI[i] * q) / pr_sum;
-                            QI_list.Add(qi);
-                            
-                        }
-                        double[] QI = QI_list.ToArray<double>();
-                        for (int i = 0; i <= RI.Length - 1; i++)
-                        {
-                     
-                            A = A = 2 * 3.141593 * f * QI[0] * RI[i];
-                            AI_list.Add(A);
-                           // MessageBox.Show(Convert.ToString(QI[i]));
-                        }
-                        double[] AI = AI_list.ToArray<double>();
-                       max = AI.Max();
+
+                    pr_sum_2 = DI_2[pr_n-1] / pr_sum;
                     for(int i=0;i<=RI.Length-1;i++)
                     {
-                        MessageBox.Show(Convert.ToString(AI[i]));
+                        qi = pr_sum_2 * q * VI[i];
+                        QI_list.Add(qi);
                     }
+                   double[] QI = QI_list.ToArray<double>();
+                
+                   for(int i=0;i<=RI.Length-1;i++)
+                    {
+                        A = 2 * 3.141592653589793238462643383279 * f * QI[i] * RI[i];
+                        AI_list.Add(A);
+                    }
+                    double[] AI = AI_list.ToArray<double>();
                     max = AI.Max();
                     MessageBox.Show(Convert.ToString(max));
-                    using (Table_context db = new Table_context())
-                    {
-
-                    }
-                        //MessageBox.Show(Convert.ToString(kol_e));
-                        /*Array.Copy(RI, RI_rez = new double[RI.Length - 1], RI.Length - 1);*/
-                    /*Rezult w = new Rezult();
-                    w.ShowDialog();*/
-
                     
+                    /*NetOffice.WordApi.Application word = new NetOffice.WordApi.Application();
+                    word.DisplayAlerts = WdAlertLevel.wdAlertsNone;
+                    NetOffice.WordApi.Document newdoc = word.Documents.Add();
+                    word.Selection.TypeText("Test text "+textBox.Text);//пока только так(
+                    word.Selection.HomeKey(WdUnits.wdLine, WdMovementType.wdExtend);
+                    word.Selection.Font.Color = WdColor.wdColorAqua;//тистим цвет
+                    word.Selection.Font.Bold = 1;
+                    word.Selection.Font.Size = 18;
+                    string fileExtension = GetDefaultExtension(word);//проверка версии
+                    object documentFile = string.Format("{0}\\Test{1}", Directory.GetCurrentDirectory(), fileExtension);
+                    newdoc.SaveAs(documentFile);
+                    word.Quit();
+                    word.Dispose();*/
+
                 }
             }
         }
