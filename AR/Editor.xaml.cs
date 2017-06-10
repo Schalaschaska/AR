@@ -20,6 +20,7 @@ using System.Threading;
 using System.Data.Entity;
 using System.ComponentModel;
 using System.Data;
+using NetOffice;
 
 namespace AR
 {
@@ -54,6 +55,7 @@ namespace AR
         public double[] RI_rez;
         //double[] Di = new double[] { 0.0240, 0.02574, 0.02750, 0.02925, 0.031, 0.03275, 0.0345, 0.03625, 0.038 };
         int[] KI = new int[] { 36, 36, 36, 36, 24, 32, 32, 32, 32 };
+        int[] NI = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         double pr_sum_2 = 0;
         double max;
         public bool save_flag;
@@ -97,8 +99,6 @@ namespace AR
                 }
                 else
                 {
-                    
-
                         List<double> KI_list_2 = new List<double> { };
                         List<double> DI_list_2 = new List<double> { };
                         List<double> RI_list_2 = new List<double> { };
@@ -146,7 +146,7 @@ namespace AR
                             Ri = Ri + H;
                             RI_list.Add(Ri);
                         
-                            //kol_e++;
+                            kol_e++;
                             //MessageBox.Show(Convert.ToString(Ri));
 
                         }
@@ -178,7 +178,6 @@ namespace AR
                         
                             pr_sum = pr_sum + (KI_2[i] * DI_2[i] * Math.Pow(VI[i], 2));
                             pr_n++;
-
                         }
 
                     pr_sum_2 = DI_2[pr_n-1] / pr_sum;
@@ -196,22 +195,112 @@ namespace AR
                     }
                     double[] AI = AI_list.ToArray<double>();
                     max = AI.Max();
+                    string date_time = DateTime.Now.ToString("dd MMMM yyyy HH:mm:ss");
+                    string date_time_2 = DateTime.Now.ToString("dd MMMM yyyy HH-mm-ss");
                     MessageBox.Show(Convert.ToString(max));
-                    
-                    /*NetOffice.WordApi.Application word = new NetOffice.WordApi.Application();
+                    NetOffice.WordApi.Application word = new NetOffice.WordApi.Application();
                     word.DisplayAlerts = WdAlertLevel.wdAlertsNone;
                     NetOffice.WordApi.Document newdoc = word.Documents.Add();
-                    word.Selection.TypeText("Test text "+textBox.Text);//пока только так(
-                    word.Selection.HomeKey(WdUnits.wdLine, WdMovementType.wdExtend);
-                    word.Selection.Font.Color = WdColor.wdColorAqua;//тистим цвет
+                    word.Selection.TypeText(date_time);//пока только так(
+                    word.Selection.TypeParagraph();
+                    word.Selection.TypeText("Исходные данные");
+                    word.Selection.TypeParagraph();
+                    NetOffice.WordApi.Table table = newdoc.Tables.Add(word.Selection.Range, n, 4);
+                    table.Borders.InsideLineStyle = WdLineStyle.wdLineStyleDashDotDot;
+                    table.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleDashDot;
+                    for(int i=0;i<n;i++)
+                    {for (int j = 1; j <= 1; j++)
+                        {
+                            table.Cell(i+1, j).Select();
+                            word.Selection.TypeText(Convert.ToString(NI[i]));
+
+                        }
+                    }
+                    for (int i = 0; i < n; i++)
+                    {
+                        for (int j = 2; j <= 2; j++)
+                        {
+                            table.Cell(i + 1, j).Select();
+                            word.Selection.TypeText(Convert.ToString(KI_2[i]));
+
+                        }
+                    }
+                    for (int i = 0; i < n; i++)
+                    {
+                        for (int j = 3; j <= 3; j++)
+                        {
+                            table.Cell(i + 1, j).Select();
+                            word.Selection.TypeText(Convert.ToString(DI_2[i]));
+
+                        }
+                    }
+                    for (int i = 0; i < n; i++)
+                    {
+                        for (int j = 4; j <= 4; j++) 
+                        {
+                            table.Cell(i + 1, j).Select();
+                            word.Selection.TypeText(Convert.ToString(RI_2[i]));
+
+                        }
+                    }
+
+
+                    /*word.Selection.TypeParagraph();
+                    word.Selection.TypeText("Таблица результатов");*/
+                    word.Selection.EndKey(6);
+                    word.Selection.TypeParagraph();
+                    NetOffice.WordApi.Table table_2 = newdoc.Tables.Add(word.Selection.Range, kol_e, 3);
+                    
+                    table_2.Borders.InsideLineStyle = WdLineStyle.wdLineStyleDashDotDot;
+                    table_2.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleDashDot;
+                    for (int i = 0; i < kol_e; i++)
+                    {
+                        for (int j = 1; j <= 1; j++)
+                        {
+                            table_2.Cell(i + 1, j).Select();
+                            word.Selection.TypeText(Convert.ToString(RI[i]));
+                        }
+                    }
+                    for (int i = 0; i < kol_e; i++)
+                    {
+                        for (int j = 2; j <= 2; j++)
+                        {
+                            table_2.Cell(i + 1, j).Select();
+                            word.Selection.TypeText(Convert.ToString(QI[i]));
+
+                        }
+                    }
+                    for (int i = 0; i < kol_e; i++)
+                    {
+                        for (int j = 3; j <= 3; j++)
+                        {
+                            table_2.Cell(i + 1, j).Select();
+                            word.Selection.TypeText(Convert.ToString(AI[i]));
+
+                        }
+                    }
+                    word.Selection.EndKey(6);
+                    word.Selection.TypeParagraph();
+                    
+                    NetOffice.WordApi.Chart chart = new NetOffice.WordApi.Chart();
+                    //word.Selection.HomeKey(WdUnits.wdLine, WdMovementType.wdExtend);
                     word.Selection.Font.Bold = 1;
                     word.Selection.Font.Size = 18;
                     string fileExtension = GetDefaultExtension(word);//проверка версии
-                    object documentFile = string.Format("{0}\\Test{1}", Directory.GetCurrentDirectory(), fileExtension);
+                    object documentFile = string.Format("{0}\\"+date_time_2+"{1}", Directory.GetCurrentDirectory(), fileExtension);
                     newdoc.SaveAs(documentFile);
                     word.Quit();
-                    word.Dispose();*/
-
+                    word.Dispose();
+                    Array.Clear(RI, 0, RI.Length);
+                    Array.Clear(YI, 0, YI.Length);
+                    Array.Clear(VI, 0, VI.Length);
+                    Array.Clear(QI, 0, QI.Length);
+                    Array.Clear(AI, 0, AI.Length);
+                    Array.Clear(KI_2, 0, KI_2.Length);
+                    Array.Clear(RI_2, 0, RI_2.Length);
+                    pr_n = 0;
+                    pr_sum = 0;
+                    pr_sum_2 = 0;
                 }
             }
         }
@@ -643,7 +732,35 @@ namespace AR
             
         }
 
-      
+
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            using (Table_context db = new Table_context())
+            {
+                
+                System.Data.SqlClient.SqlParameter param = new System.Data.SqlClient.SqlParameter("@Id", "%"+box.SelectedItem+"");
+                var table = db.Database.SqlQuery<Table_base>("SELECT * FROM Table_base WHERE Id LIKE @Id",param);
+                
+                foreach (var table_base in table)
+                {
+                    o_n.Text = Convert.ToString(table_base.o_s_base);
+                }
+            }
+
+        }
+        private void ListBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            using (Table_context db = new Table_context())
+            {
+                var table = db.Database.SqlQuery<Table_base>("SELECT Id FROM Table_base");
+                
+                int[] countries = {1,2,3,4,5,6,7,8,9,10};
+                foreach (var s in countries)
+                box.Items.Add(s);
+            }
+        }
+
         /*
 private void grid_Loaded(object sender, RoutedEventArgs e)
 {
