@@ -73,8 +73,9 @@
         <TextBox HorizontalAlignment="Left" Height="23" Margin="191,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Name="Rn_t" TextChanged="Rn_t_TextChanged"/>
         <Button Content="Save" HorizontalAlignment="Left" Margin="25,268,0,0" VerticalAlignment="Top" Width="78" Height="25" Click="Button_Click_1"/>
         <Button Content="Load" HorizontalAlignment="Left" Margin="25,300,0,0" VerticalAlignment="Top" Width="78" Height="25" Click="Button_Click_2"/>
-        <Button Content="Load" HorizontalAlignment="Left" Margin="50,341,0,0" VerticalAlignment="Top" Width="78" Height="25" Click="Button_Click_4"/>
+        <Button Content="Load" HorizontalAlignment="Left" Margin="25,337,0,0" VerticalAlignment="Top" Width="78" Height="25" Click="Button_Click_4"/>
         <ListBox HorizontalAlignment="Left" Height="46" Margin="172,326,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.187,-0.014" Loaded="ListBox_Loaded" Name="box"/>
+        <Button Content="Urdate" HorizontalAlignment="Left" Margin="111,301,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_3"/>
 
     </Grid>
 </Window>

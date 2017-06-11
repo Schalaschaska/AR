@@ -301,6 +301,7 @@ namespace AR
                     pr_n = 0;
                     pr_sum = 0;
                     pr_sum_2 = 0;
+                    kol_e = 0;
                 }
             }
         }
@@ -673,6 +674,10 @@ namespace AR
         {   
             using (Table_context db = new Table_context())
             {
+               
+                var a = db.table.Where(c => c.Id ==1).FirstOrDefault(); 
+                a.o_s_base = 10;
+
                     Table_base n1 = new Table_base { t1_1 = Convert.ToDouble(n1_1.Text), t1_2 = Convert.ToDouble(n1_2.Text), t1_3 = Convert.ToDouble(n1_3.Text), t1_4 = Convert.ToDouble(n1_4.Text),
                     t2_1 = Convert.ToDouble(n2_1.Text), t2_2 = Convert.ToDouble(n2_2.Text), t2_3 = Convert.ToDouble(n2_3.Text), t2_4 = Convert.ToDouble(n2_4.Text),
                     t3_1 = Convert.ToDouble(n3_1.Text), t3_2 = Convert.ToDouble(n3_2.Text), t3_3 = Convert.ToDouble(n3_3.Text), t3_4 = Convert.ToDouble(n3_4.Text),
@@ -684,9 +689,10 @@ namespace AR
                     t9_1 = Convert.ToDouble(n9_1.Text), t9_2 = Convert.ToDouble(n9_2.Text), t9_3 = Convert.ToDouble(n9_3.Text), t9_4 = Convert.ToDouble(n9_4.Text),
                     k_t_base = Convert.ToDouble(k_t.Text), k_s_base = Convert.ToDouble(k_s.Text), o_s_base = Convert.ToDouble(o_n.Text), p_p_base = Convert.ToDouble(p_p.Text), v_r_base = Convert.ToDouble(v_r.Text),
                     ri_base = Convert.ToDouble(Ri_t.Text), rn_base = Convert.ToDouble(Rn_t.Text), h_base = Convert.ToDouble(H_t.Text)};
+                    
                 db.table.Add(n1);
                 db.SaveChanges();
-                if (save_flag == true)
+               /* if (save_flag == true)
                 {
                     Table_base p1 = db.table.FirstOrDefault();
                     
@@ -696,7 +702,7 @@ namespace AR
                         db.table.Remove(p1);
                         db.SaveChanges();
                     }
-                }
+                }*/
             }
             
         }
@@ -710,7 +716,7 @@ namespace AR
                 var Table = db.table;
                 foreach (Table_base u in Table)
                 {
-
+                  
                     n1_1.Text = Convert.ToString(u.t1_1);n1_2.Text = Convert.ToString(u.t1_2);n1_3.Text = Convert.ToString(u.t1_3);n1_4.Text = Convert.ToString(u.t1_4);
                     n2_1.Text = Convert.ToString(u.t2_1);n2_2.Text = Convert.ToString(u.t2_2);n2_3.Text = Convert.ToString(u.t2_3);n2_4.Text = Convert.ToString(u.t2_4);
                     n3_1.Text = Convert.ToString(u.t3_1);n3_2.Text = Convert.ToString(u.t3_2);n3_3.Text = Convert.ToString(u.t3_3);n3_4.Text = Convert.ToString(u.t3_4);
@@ -722,7 +728,6 @@ namespace AR
                     n9_1.Text = Convert.ToString(u.t9_1); n9_2.Text = Convert.ToString(u.t9_2); n9_3.Text = Convert.ToString(u.t9_3); n9_4.Text = Convert.ToString(u.t9_4);
                     Ri_t.Text = Convert.ToString(u.ri_base);Rn_t.Text = Convert.ToString(u.rn_base);H_t.Text = Convert.ToString(u.h_base);k_t.Text = Convert.ToString(u.k_t_base);
                     k_s.Text = Convert.ToString(u.k_s_base);o_n.Text = Convert.ToString(u.o_s_base);p_p.Text = Convert.ToString(u.p_p_base);v_r.Text=Convert.ToString(u.v_r_base) ;
-
                 }
                 save_flag = true;
               
@@ -745,6 +750,8 @@ namespace AR
                 foreach (var table_base in table)
                 {
                     o_n.Text = Convert.ToString(table_base.o_s_base);
+                    
+                    
                 }
             }
 
@@ -755,11 +762,24 @@ namespace AR
             {
                 var table = db.Database.SqlQuery<Table_base>("SELECT Id FROM Table_base");
                 
-                int[] countries = {1,2,3,4,5,6,7,8,9,10};
+                int[] countries = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
                 foreach (var s in countries)
                 box.Items.Add(s);
             }
         }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            using (Table_context db = new Table_context())
+            {
+                int zh =Convert.ToInt32(box.SelectedItem);
+                //MessageBox.Show(Convert.ToString(zh));
+                var a = db.table.Where(c => c.Id == zh).FirstOrDefault();
+                a.o_s_base = 50;
+                db.SaveChanges();
+
+            }
+            }
 
         /*
 private void grid_Loaded(object sender, RoutedEventArgs e)
