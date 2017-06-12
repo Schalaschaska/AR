@@ -22,6 +22,7 @@ using System.ComponentModel;
 using System.Data;
 using NetOffice;
 
+
 namespace AR
 {
     /// <summary>
@@ -32,8 +33,14 @@ namespace AR
         public Editor()
         {
             InitializeComponent();
+            
+
+
 
         }
+
+      
+
         public double yi;//Уравнения профиля коронки
         public double Vi=0;
         public double di=0;
@@ -42,7 +49,6 @@ namespace AR
         public double q;
         public double qi = 0;
         public double Ri;
-        //double[] RI = new double[] { };
         public double R0= 0.020;
         public double Ki=0;
         public double f;
@@ -53,8 +59,6 @@ namespace AR
         public double A;
         public int kol_e;
         public double[] RI_rez;
-        //double[] Di = new double[] { 0.0240, 0.02574, 0.02750, 0.02925, 0.031, 0.03275, 0.0345, 0.03625, 0.038 };
-        int[] KI = new int[] { 36, 36, 36, 36, 24, 32, 32, 32, 32 };
         int[] NI = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         double pr_sum_2 = 0;
         double max;
@@ -67,38 +71,54 @@ namespace AR
             start_page.Show();
             this.Close();
         }
-
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            if (k_t.Text == "" || k_s.Text == "" || v_r.Text == "" || p_p.Text == "" || o_n.Text == "" || Ri_t.Text == "")
-            {
-                MessageBox.Show("testerror");
-            }
+            if (string.IsNullOrWhiteSpace(k_t.Text) || string.IsNullOrWhiteSpace(k_s.Text) || string.IsNullOrWhiteSpace(o_n.Text) || string.IsNullOrWhiteSpace(p_p.Text) ||
+                   string.IsNullOrWhiteSpace(v_r.Text) || string.IsNullOrWhiteSpace(Ri_t.Text) || string.IsNullOrWhiteSpace(Rn_t.Text) || string.IsNullOrWhiteSpace(H_t.Text) ||
+                   string.IsNullOrWhiteSpace(n1_1.Text) || string.IsNullOrWhiteSpace(n1_2.Text) || string.IsNullOrWhiteSpace(n1_3.Text) || string.IsNullOrWhiteSpace(n1_4.Text) ||
+                   string.IsNullOrWhiteSpace(n2_1.Text) || string.IsNullOrWhiteSpace(n2_2.Text) || string.IsNullOrWhiteSpace(n2_3.Text) || string.IsNullOrWhiteSpace(n2_4.Text) ||
+                   string.IsNullOrWhiteSpace(n3_1.Text) || string.IsNullOrWhiteSpace(n3_2.Text) || string.IsNullOrWhiteSpace(n3_3.Text) || string.IsNullOrWhiteSpace(n3_4.Text) ||
+                   string.IsNullOrWhiteSpace(n4_1.Text) || string.IsNullOrWhiteSpace(n4_2.Text) || string.IsNullOrWhiteSpace(n4_3.Text) || string.IsNullOrWhiteSpace(n4_4.Text) ||
+                   string.IsNullOrWhiteSpace(n5_1.Text) || string.IsNullOrWhiteSpace(n5_2.Text) || string.IsNullOrWhiteSpace(n5_3.Text) || string.IsNullOrWhiteSpace(n5_4.Text) ||
+                   string.IsNullOrWhiteSpace(n6_1.Text) || string.IsNullOrWhiteSpace(n6_2.Text) || string.IsNullOrWhiteSpace(n6_3.Text) || string.IsNullOrWhiteSpace(n6_4.Text) ||
+                   string.IsNullOrWhiteSpace(n7_1.Text) || string.IsNullOrWhiteSpace(n7_2.Text) || string.IsNullOrWhiteSpace(n7_3.Text) || string.IsNullOrWhiteSpace(n7_4.Text) ||
+                   string.IsNullOrWhiteSpace(n8_1.Text) || string.IsNullOrWhiteSpace(n8_2.Text) || string.IsNullOrWhiteSpace(n8_3.Text) || string.IsNullOrWhiteSpace(n8_4.Text) ||
+                   string.IsNullOrWhiteSpace(n9_1.Text) || string.IsNullOrWhiteSpace(n9_2.Text) || string.IsNullOrWhiteSpace(n9_3.Text) || string.IsNullOrWhiteSpace(n9_4.Text)
+
+                   )
+            { MessageBox.Show("Ошибка ввода!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Information); }
             else
             {
+                Regex X = new Regex(@"^\d*(\,\d+)?$");
 
-                f = Convert.ToDouble(k_t.Text);
-                n = Convert.ToInt32(k_s.Text);
-                R0 = Convert.ToDouble(v_r.Text);
-                a = Convert.ToDouble(p_p.Text);
-                q = Convert.ToDouble(o_n.Text);
-                Ri = Convert.ToDouble(Ri_t.Text);
-                H = Convert.ToDouble(H_t.Text);
-
-
-                if(Convert.ToDouble(n2_4.Text) <= (Convert.ToDouble(n1_4.Text)) ||
-                  (Convert.ToDouble(n3_4.Text) <= (Convert.ToDouble(n2_4.Text)) ||
-                  (Convert.ToDouble(n4_4.Text) <= (Convert.ToDouble(n3_4.Text)) ||
-                  (Convert.ToDouble(n5_4.Text) <= (Convert.ToDouble(n4_4.Text)) ||
-                  (Convert.ToDouble(n6_4.Text) <= (Convert.ToDouble(n5_4.Text)) ||
-                  (Convert.ToDouble(n7_4.Text) <= (Convert.ToDouble(n6_4.Text)) ||
-                  (Convert.ToDouble(n8_4.Text) <= (Convert.ToDouble(n7_4.Text)) ||
-                  (Convert.ToDouble(n9_4.Text) <= (Convert.ToDouble(n8_4.Text))))))))))
+                if (X.IsMatch(n1_1.Text) && (X.IsMatch(n1_2.Text)) && (X.IsMatch(n1_3.Text)) && (X.IsMatch(n1_4.Text)) && (X.IsMatch(n2_1.Text)) && (X.IsMatch(n2_2.Text)) &&
+                    (X.IsMatch(n2_3.Text)) && (X.IsMatch(n2_4.Text)) && (X.IsMatch(n3_1.Text)) && (X.IsMatch(n3_2.Text)) && (X.IsMatch(n3_3.Text)) && (X.IsMatch(n3_4.Text)) &&
+                    (X.IsMatch(n4_1.Text)) && (X.IsMatch(n4_2.Text)) && (X.IsMatch(n4_3.Text)) && (X.IsMatch(n4_4.Text)) && (X.IsMatch(n5_1.Text)) && (X.IsMatch(n5_2.Text)) &&
+                    (X.IsMatch(n5_3.Text)) && (X.IsMatch(n5_4.Text)) && (X.IsMatch(n6_1.Text)) && (X.IsMatch(n6_2.Text)) && (X.IsMatch(n6_3.Text)) && (X.IsMatch(n6_4.Text)) &&
+                    (X.IsMatch(n7_1.Text)) && (X.IsMatch(n7_2.Text)) && (X.IsMatch(n7_3.Text)) && (X.IsMatch(n7_4.Text)) && (X.IsMatch(n8_1.Text)) && (X.IsMatch(n8_2.Text)) &&
+                    (X.IsMatch(n8_3.Text)) && (X.IsMatch(n8_4.Text)) && (X.IsMatch(n9_1.Text)) && (X.IsMatch(n9_2.Text)) && (X.IsMatch(n9_3.Text)) && (X.IsMatch(n9_4.Text)) &&
+                    (X.IsMatch(k_t.Text)) && (X.IsMatch(k_s.Text)) && (X.IsMatch(o_n.Text)) && (X.IsMatch(p_p.Text)) && (X.IsMatch(v_r.Text)) && (X.IsMatch(Ri_t.Text)) && (X.IsMatch(Rn_t.Text)) && (X.IsMatch(H_t.Text)))
                 {
-                    MessageBox.Show("testerror");
-                }
-                else
-                {
+                    f = Convert.ToDouble(k_t.Text);
+                    n = Convert.ToInt32(k_s.Text);
+                    R0 = Convert.ToDouble(v_r.Text);
+                    a = Convert.ToDouble(p_p.Text);
+                    q = Convert.ToDouble(o_n.Text);
+                    Ri = Convert.ToDouble(Ri_t.Text);
+                    H = Convert.ToDouble(H_t.Text);
+                    if (Convert.ToDouble(n2_4.Text) <= (Convert.ToDouble(n1_4.Text)) ||
+                      (Convert.ToDouble(n3_4.Text) <= (Convert.ToDouble(n2_4.Text)) ||
+                      (Convert.ToDouble(n4_4.Text) <= (Convert.ToDouble(n3_4.Text)) ||
+                      (Convert.ToDouble(n5_4.Text) <= (Convert.ToDouble(n4_4.Text)) ||
+                      (Convert.ToDouble(n6_4.Text) <= (Convert.ToDouble(n5_4.Text)) ||
+                      (Convert.ToDouble(n7_4.Text) <= (Convert.ToDouble(n6_4.Text)) ||
+                      (Convert.ToDouble(n8_4.Text) <= (Convert.ToDouble(n7_4.Text)) ||
+                      (Convert.ToDouble(n9_4.Text) <= (Convert.ToDouble(n8_4.Text))))))))))
+                    {
+                        MessageBox.Show("Ошибка ввода!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
                         List<double> KI_list_2 = new List<double> { };
                         List<double> DI_list_2 = new List<double> { };
                         List<double> RI_list_2 = new List<double> { };
@@ -138,181 +158,180 @@ namespace AR
                         List<double> QI_list = new List<double> { };
                         List<double> AI_list = new List<double> { };
                         List<double> Sum_list = new List<double> { };
-                        
                         RI_list.Add(Convert.ToDouble(n1_4.Text));
                         while (Ri <= Convert.ToDouble(n9_4.Text))
                         {
 
                             Ri = Ri + H;
                             RI_list.Add(Ri);
-                        
+
                             kol_e++;
-                            //MessageBox.Show(Convert.ToString(Ri));
 
                         }
                         double[] RI = RI_list.ToArray<double>();
-                        
-                        for (int i = 0; i <= RI.Length-1; i++)
+
+                        for (int i = 0; i <= RI.Length - 1; i++)
                         {
                             yi = 2 * a * (RI[i] - R0);
                             YI_list.Add(yi);
-                       
+
 
                         }
                         double[] YI = YI_list.ToArray<double>();
-
-                  
-
-                    for (int i = 0; i <= RI.Length-1; i++)
+                        for (int i = 0; i <= RI.Length - 1; i++)
                         {
 
-                        Vi = 1 / (Math.Sqrt(1 + YI[i] * YI[i]));
-                        VI_list.Add(Vi);
-                        //MessageBox.Show(Convert.ToString(YI[i]));
+                            Vi = 1 / (Math.Sqrt(1 + YI[i] * YI[i]));
+                            VI_list.Add(Vi);
                         }
                         double[] VI = VI_list.ToArray<double>();
-                   
-                
-                    for (int i = 0; i <= n-1; i++)
+
+
+                        for (int i = 0; i <= n - 1; i++)
                         {
-                        
+
                             pr_sum = pr_sum + (KI_2[i] * DI_2[i] * Math.Pow(VI[i], 2));
                             pr_n++;
                         }
 
-                    pr_sum_2 = DI_2[pr_n-1] / pr_sum;
-                    for(int i=0;i<=RI.Length-1;i++)
-                    {
-                        qi = pr_sum_2 * q * VI[i];
-                        QI_list.Add(qi);
-                    }
-                   double[] QI = QI_list.ToArray<double>();
-                
-                   for(int i=0;i<=RI.Length-1;i++)
-                    {
-                        A = 2 * 3.141592653589793238462643383279 * f * QI[i] * RI[i];
-                        AI_list.Add(A);
-                    }
-                    double[] AI = AI_list.ToArray<double>();
-                    max = AI.Max();
-                    string date_time = DateTime.Now.ToString("dd MMMM yyyy HH:mm:ss");
-                    string date_time_2 = DateTime.Now.ToString("dd MMMM yyyy HH-mm-ss");
-                    MessageBox.Show(Convert.ToString(max));
-                    NetOffice.WordApi.Application word = new NetOffice.WordApi.Application();
-                    word.DisplayAlerts = WdAlertLevel.wdAlertsNone;
-                    NetOffice.WordApi.Document newdoc = word.Documents.Add();
-                    word.Selection.TypeText(date_time);//пока только так(
-                    word.Selection.TypeParagraph();
-                    word.Selection.TypeText("Исходные данные");
-                    word.Selection.TypeParagraph();
-                    NetOffice.WordApi.Table table = newdoc.Tables.Add(word.Selection.Range, n, 4);
-                    table.Borders.InsideLineStyle = WdLineStyle.wdLineStyleDashDotDot;
-                    table.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleDashDot;
-                    for(int i=0;i<n;i++)
-                    {for (int j = 1; j <= 1; j++)
+                        pr_sum_2 = DI_2[pr_n - 1] / pr_sum;
+                        for (int i = 0; i <= RI.Length - 1; i++)
                         {
-                            table.Cell(i+1, j).Select();
-                            word.Selection.TypeText(Convert.ToString(NI[i]));
-
+                            qi = pr_sum_2 * q * VI[i];
+                            QI_list.Add(qi);
                         }
-                    }
-                    for (int i = 0; i < n; i++)
-                    {
-                        for (int j = 2; j <= 2; j++)
+                        double[] QI = QI_list.ToArray<double>();
+
+                        for (int i = 0; i <= RI.Length - 1; i++)
                         {
-                            table.Cell(i + 1, j).Select();
-                            word.Selection.TypeText(Convert.ToString(KI_2[i]));
-
+                            A = 2 * 3.141592653589793238462643383279 * f * QI[i] * RI[i];
+                            AI_list.Add(A);
                         }
-                    }
-                    for (int i = 0; i < n; i++)
-                    {
-                        for (int j = 3; j <= 3; j++)
+                        double[] AI = AI_list.ToArray<double>();
+                        max = AI.Max();
+                        string date_time = DateTime.Now.ToString("dd MMMM yyyy HH:mm:ss");
+                        string date_time_2 = DateTime.Now.ToString("dd MMMM yyyy HH-mm-ss");
+                        MessageBox.Show(Convert.ToString(max));
+                        NetOffice.WordApi.Application word = new NetOffice.WordApi.Application();
+                        word.DisplayAlerts = WdAlertLevel.wdAlertsNone;
+                        NetOffice.WordApi.Document newdoc = word.Documents.Add();
+                        word.Selection.TypeText(date_time);//пока только так(
+                        word.Selection.TypeParagraph();
+                        word.Selection.TypeText("Исходные данные");
+                        word.Selection.TypeParagraph();
+                        NetOffice.WordApi.Table table = newdoc.Tables.Add(word.Selection.Range, n, 4);
+                        table.Borders.InsideLineStyle = WdLineStyle.wdLineStyleDashDotDot;
+                        table.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleDashDot;
+                        for (int i = 0; i < n; i++)
                         {
-                            table.Cell(i + 1, j).Select();
-                            word.Selection.TypeText(Convert.ToString(DI_2[i]));
+                            for (int j = 1; j <= 1; j++)
+                            {
+                                table.Cell(i + 1, j).Select();
+                                word.Selection.TypeText(Convert.ToString(NI[i]));
 
+                            }
                         }
-                    }
-                    for (int i = 0; i < n; i++)
-                    {
-                        for (int j = 4; j <= 4; j++) 
+                        for (int i = 0; i < n; i++)
                         {
-                            table.Cell(i + 1, j).Select();
-                            word.Selection.TypeText(Convert.ToString(RI_2[i]));
+                            for (int j = 2; j <= 2; j++)
+                            {
+                                table.Cell(i + 1, j).Select();
+                                word.Selection.TypeText(Convert.ToString(KI_2[i]));
 
+                            }
                         }
-                    }
-
-
-                    /*word.Selection.TypeParagraph();
-                    word.Selection.TypeText("Таблица результатов");*/
-                    word.Selection.EndKey(6);
-                    word.Selection.TypeParagraph();
-                    NetOffice.WordApi.Table table_2 = newdoc.Tables.Add(word.Selection.Range, kol_e, 3);
-                    
-                    table_2.Borders.InsideLineStyle = WdLineStyle.wdLineStyleDashDotDot;
-                    table_2.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleDashDot;
-                    for (int i = 0; i < kol_e; i++)
-                    {
-                        for (int j = 1; j <= 1; j++)
+                        for (int i = 0; i < n; i++)
                         {
-                            table_2.Cell(i + 1, j).Select();
-                            word.Selection.TypeText(Convert.ToString(RI[i]));
-                        }
-                    }
-                    for (int i = 0; i < kol_e; i++)
-                    {
-                        for (int j = 2; j <= 2; j++)
-                        {
-                            table_2.Cell(i + 1, j).Select();
-                            word.Selection.TypeText(Convert.ToString(QI[i]));
+                            for (int j = 3; j <= 3; j++)
+                            {
+                                table.Cell(i + 1, j).Select();
+                                word.Selection.TypeText(Convert.ToString(DI_2[i]));
 
+                            }
                         }
-                    }
-                    for (int i = 0; i < kol_e; i++)
-                    {
-                        for (int j = 3; j <= 3; j++)
+                        for (int i = 0; i < n; i++)
                         {
-                            table_2.Cell(i + 1, j).Select();
-                            word.Selection.TypeText(Convert.ToString(AI[i]));
+                            for (int j = 4; j <= 4; j++)
+                            {
+                                table.Cell(i + 1, j).Select();
+                                word.Selection.TypeText(Convert.ToString(RI_2[i]));
 
+                            }
                         }
+
+                        /*word.Selection.TypeParagraph();
+                        word.Selection.TypeText("Таблица результатов");*/
+                        word.Selection.EndKey(6);
+                        word.Selection.TypeParagraph();
+                        NetOffice.WordApi.Table table_2 = newdoc.Tables.Add(word.Selection.Range, kol_e, 3);
+
+                        table_2.Borders.InsideLineStyle = WdLineStyle.wdLineStyleDashDotDot;
+                        table_2.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleDashDot;
+                        for (int i = 0; i < kol_e; i++)
+                        {
+                            for (int j = 1; j <= 1; j++)
+                            {
+                                table_2.Cell(i + 1, j).Select();
+                                word.Selection.TypeText(Convert.ToString(RI[i]));
+                            }
+                        }
+                        for (int i = 0; i < kol_e; i++)
+                        {
+                            for (int j = 2; j <= 2; j++)
+                            {
+                                table_2.Cell(i + 1, j).Select();
+                                word.Selection.TypeText(Convert.ToString(QI[i]));
+
+                            }
+                        }
+                        for (int i = 0; i < kol_e; i++)
+                        {
+                            for (int j = 3; j <= 3; j++)
+                            {
+                                table_2.Cell(i + 1, j).Select();
+                                word.Selection.TypeText(Convert.ToString(AI[i]));
+
+                            }
+                        }
+                        word.Selection.EndKey(6);
+                        word.Selection.TypeParagraph();
+                        //NetOffice.WordApi.Chart chart = new NetOffice.WordApi.Chart();
+                        //newdoc.Shapes.AddPicture(@"C:\an\test.jpg");
+                        //word.Selection.HomeKey(WdUnits.wdLine, WdMovementType.wdExtend);
+
+
+
+
+
+
+
+                        //word.Selection.Font.Bold = 1;
+                        //word.Selection.Font.Size = 18;
+                        string fileExtension = GetDefaultExtension(word);//проверка версии
+                        object documentFile = string.Format("{0}\\" + date_time_2 + "{1}", Directory.GetCurrentDirectory(), fileExtension);
+                        newdoc.SaveAs(documentFile);
+                        word.Quit();
+                        word.Dispose();
+                        Array.Clear(RI, 0, RI.Length);
+                        Array.Clear(YI, 0, YI.Length);
+                        Array.Clear(VI, 0, VI.Length);
+                        Array.Clear(QI, 0, QI.Length);
+                        Array.Clear(AI, 0, AI.Length);
+                        Array.Clear(KI_2, 0, KI_2.Length);
+                        Array.Clear(RI_2, 0, RI_2.Length);
+                        pr_n = 0;
+                        pr_sum = 0;
+                        pr_sum_2 = 0;
+                        kol_e = 0;
                     }
-                    word.Selection.EndKey(6);
-                    word.Selection.TypeParagraph();
-                    
-                    NetOffice.WordApi.Chart chart = new NetOffice.WordApi.Chart();
-                    //word.Selection.HomeKey(WdUnits.wdLine, WdMovementType.wdExtend);
-                    word.Selection.Font.Bold = 1;
-                    word.Selection.Font.Size = 18;
-                    string fileExtension = GetDefaultExtension(word);//проверка версии
-                    object documentFile = string.Format("{0}\\"+date_time_2+"{1}", Directory.GetCurrentDirectory(), fileExtension);
-                    newdoc.SaveAs(documentFile);
-                    word.Quit();
-                    word.Dispose();
-                    Array.Clear(RI, 0, RI.Length);
-                    Array.Clear(YI, 0, YI.Length);
-                    Array.Clear(VI, 0, VI.Length);
-                    Array.Clear(QI, 0, QI.Length);
-                    Array.Clear(AI, 0, AI.Length);
-                    Array.Clear(KI_2, 0, KI_2.Length);
-                    Array.Clear(RI_2, 0, RI_2.Length);
-                    pr_n = 0;
-                    pr_sum = 0;
-                    pr_sum_2 = 0;
-                    kol_e = 0;
+                }
+                else
+                {
+                    MessageBox.Show("Ошибка ввода!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
         }
-       
-        
-
-
-
-
         #region Helder
-
         private static string GetDefaultExtension(NetOffice.WordApi.Application application)
         {
             double version = Convert.ToDouble(application.Version, CultureInfo.InvariantCulture);
@@ -321,424 +340,181 @@ namespace AR
             else
                 return ".doc";
         }
-
         #endregion
-
         private void k_s_TextChanged(object sender, TextChangedEventArgs e)
         {
             if(k_s.Text=="1")
             {
-                
-                
-
-                n2_1.Visibility = Visibility.Hidden;
-                n2_2.Visibility = Visibility.Hidden;
-                n2_3.Visibility = Visibility.Hidden;
-                n2_4.Visibility = Visibility.Hidden;
-                n3_1.Visibility = Visibility.Hidden;
-                n3_2.Visibility = Visibility.Hidden;
-                n3_3.Visibility = Visibility.Hidden;
-                n3_4.Visibility = Visibility.Hidden;
-                n4_1.Visibility = Visibility.Hidden;
-                n4_2.Visibility = Visibility.Hidden;
-                n4_3.Visibility = Visibility.Hidden;
-                n4_4.Visibility = Visibility.Hidden;
-                n5_1.Visibility = Visibility.Hidden;
-                n5_2.Visibility = Visibility.Hidden;
-                n5_3.Visibility = Visibility.Hidden;
-                n5_4.Visibility = Visibility.Hidden;
-                n6_1.Visibility = Visibility.Hidden;
-                n6_2.Visibility = Visibility.Hidden;
-                n6_3.Visibility = Visibility.Hidden;
-                n6_4.Visibility = Visibility.Hidden;
-                n7_1.Visibility = Visibility.Hidden;
-                n7_2.Visibility = Visibility.Hidden;
-                n7_3.Visibility = Visibility.Hidden;
-                n7_4.Visibility = Visibility.Hidden;
-                n8_1.Visibility = Visibility.Hidden;
-                n8_2.Visibility = Visibility.Hidden;
-                n8_3.Visibility = Visibility.Hidden;
-                n8_4.Visibility = Visibility.Hidden;
-                n9_1.Visibility = Visibility.Hidden;
-                n9_2.Visibility = Visibility.Hidden;
-                n9_3.Visibility = Visibility.Hidden;
-                n9_4.Visibility = Visibility.Hidden;
+                n2_1.Visibility = Visibility.Hidden;n2_2.Visibility = Visibility.Hidden;n2_3.Visibility = Visibility.Hidden;n2_4.Visibility = Visibility.Hidden;
+                n3_1.Visibility = Visibility.Hidden;n3_2.Visibility = Visibility.Hidden;n3_3.Visibility = Visibility.Hidden;n3_4.Visibility = Visibility.Hidden;
+                n4_1.Visibility = Visibility.Hidden;n4_2.Visibility = Visibility.Hidden;n4_3.Visibility = Visibility.Hidden;n4_4.Visibility = Visibility.Hidden;
+                n5_1.Visibility = Visibility.Hidden;n5_2.Visibility = Visibility.Hidden;n5_3.Visibility = Visibility.Hidden;n5_4.Visibility = Visibility.Hidden;
+                n6_1.Visibility = Visibility.Hidden;n6_2.Visibility = Visibility.Hidden;n6_3.Visibility = Visibility.Hidden;n6_4.Visibility = Visibility.Hidden;
+                n7_1.Visibility = Visibility.Hidden;n7_2.Visibility = Visibility.Hidden;n7_3.Visibility = Visibility.Hidden;n7_4.Visibility = Visibility.Hidden;
+                n8_1.Visibility = Visibility.Hidden;n8_2.Visibility = Visibility.Hidden;n8_3.Visibility = Visibility.Hidden;n8_4.Visibility = Visibility.Hidden;
+                n9_1.Visibility = Visibility.Hidden;n9_2.Visibility = Visibility.Hidden;n9_3.Visibility = Visibility.Hidden;n9_4.Visibility = Visibility.Hidden;
             }
             if(k_s.Text=="2")
             {
-                n2_1.Visibility = Visibility.Visible;
-                n2_2.Visibility = Visibility.Visible;
-                n2_3.Visibility = Visibility.Visible;
-                n2_4.Visibility = Visibility.Visible;
-                n3_1.Visibility = Visibility.Hidden;
-                n3_2.Visibility = Visibility.Hidden;
-                n3_3.Visibility = Visibility.Hidden;
-                n3_4.Visibility = Visibility.Hidden;
-                n4_1.Visibility = Visibility.Hidden;
-                n4_2.Visibility = Visibility.Hidden;
-                n4_3.Visibility = Visibility.Hidden;
-                n4_4.Visibility = Visibility.Hidden;
-                n5_1.Visibility = Visibility.Hidden;
-                n5_2.Visibility = Visibility.Hidden;
-                n5_3.Visibility = Visibility.Hidden;
-                n5_4.Visibility = Visibility.Hidden;
-                n6_1.Visibility = Visibility.Hidden;
-                n6_2.Visibility = Visibility.Hidden;
-                n6_3.Visibility = Visibility.Hidden;
-                n6_4.Visibility = Visibility.Hidden;
-                n7_1.Visibility = Visibility.Hidden;
-                n7_2.Visibility = Visibility.Hidden;
-                n7_3.Visibility = Visibility.Hidden;
-                n7_4.Visibility = Visibility.Hidden;
-                n8_1.Visibility = Visibility.Hidden;
-                n8_2.Visibility = Visibility.Hidden;
-                n8_3.Visibility = Visibility.Hidden;
-                n8_4.Visibility = Visibility.Hidden;
-                n9_1.Visibility = Visibility.Hidden;
-                n9_2.Visibility = Visibility.Hidden;
-                n9_3.Visibility = Visibility.Hidden;
-                n9_4.Visibility = Visibility.Hidden;
+                n2_1.Visibility = Visibility.Visible;n2_2.Visibility = Visibility.Visible;n2_3.Visibility = Visibility.Visible;n2_4.Visibility = Visibility.Visible;
+                n3_1.Visibility = Visibility.Hidden;n3_2.Visibility = Visibility.Hidden;n3_3.Visibility = Visibility.Hidden;n3_4.Visibility = Visibility.Hidden;
+                n4_1.Visibility = Visibility.Hidden;n4_2.Visibility = Visibility.Hidden;n4_3.Visibility = Visibility.Hidden;n4_4.Visibility = Visibility.Hidden;
+                n5_1.Visibility = Visibility.Hidden;n5_2.Visibility = Visibility.Hidden;n5_3.Visibility = Visibility.Hidden;n5_4.Visibility = Visibility.Hidden;
+                n6_1.Visibility = Visibility.Hidden;n6_2.Visibility = Visibility.Hidden;n6_3.Visibility = Visibility.Hidden;n6_4.Visibility = Visibility.Hidden;
+                n7_1.Visibility = Visibility.Hidden;n7_2.Visibility = Visibility.Hidden;n7_3.Visibility = Visibility.Hidden;n7_4.Visibility = Visibility.Hidden;
+                n8_1.Visibility = Visibility.Hidden;n8_2.Visibility = Visibility.Hidden;n8_3.Visibility = Visibility.Hidden;n8_4.Visibility = Visibility.Hidden;
+                n9_1.Visibility = Visibility.Hidden;n9_2.Visibility = Visibility.Hidden;n9_3.Visibility = Visibility.Hidden;n9_4.Visibility = Visibility.Hidden;
             }
             if(k_s.Text=="3")
             {
-                n2_1.Visibility = Visibility.Visible;
-                n2_2.Visibility = Visibility.Visible;
-                n2_3.Visibility = Visibility.Visible;
-                n2_4.Visibility = Visibility.Visible;
-                n3_1.Visibility = Visibility.Visible;
-                n3_2.Visibility = Visibility.Visible;
-                n3_3.Visibility = Visibility.Visible;
-                n3_4.Visibility = Visibility.Visible;
-                n4_1.Visibility = Visibility.Hidden;
-                n4_2.Visibility = Visibility.Hidden;
-                n4_3.Visibility = Visibility.Hidden;
-                n4_4.Visibility = Visibility.Hidden;
-                n5_1.Visibility = Visibility.Hidden;
-                n5_2.Visibility = Visibility.Hidden;
-                n5_3.Visibility = Visibility.Hidden;
-                n5_4.Visibility = Visibility.Hidden;
-                n6_1.Visibility = Visibility.Hidden;
-                n6_2.Visibility = Visibility.Hidden;
-                n6_3.Visibility = Visibility.Hidden;
-                n6_4.Visibility = Visibility.Hidden;
-                n7_1.Visibility = Visibility.Hidden;
-                n7_2.Visibility = Visibility.Hidden;
-                n7_3.Visibility = Visibility.Hidden;
-                n7_4.Visibility = Visibility.Hidden;
-                n8_1.Visibility = Visibility.Hidden;
-                n8_2.Visibility = Visibility.Hidden;
-                n8_3.Visibility = Visibility.Hidden;
-                n8_4.Visibility = Visibility.Hidden;
-                n9_1.Visibility = Visibility.Hidden;
-                n9_2.Visibility = Visibility.Hidden;
-                n9_3.Visibility = Visibility.Hidden;
-                n9_4.Visibility = Visibility.Hidden;
+                n2_1.Visibility = Visibility.Visible;n2_2.Visibility = Visibility.Visible;n2_3.Visibility = Visibility.Visible;n2_4.Visibility = Visibility.Visible;
+                n3_1.Visibility = Visibility.Visible;n3_2.Visibility = Visibility.Visible;n3_3.Visibility = Visibility.Visible;n3_4.Visibility = Visibility.Visible;
+                n4_1.Visibility = Visibility.Hidden;n4_2.Visibility = Visibility.Hidden;n4_3.Visibility = Visibility.Hidden;n4_4.Visibility = Visibility.Hidden;
+                n5_1.Visibility = Visibility.Hidden;n5_2.Visibility = Visibility.Hidden;n5_3.Visibility = Visibility.Hidden;n5_4.Visibility = Visibility.Hidden;
+                n6_1.Visibility = Visibility.Hidden;n6_2.Visibility = Visibility.Hidden;n6_3.Visibility = Visibility.Hidden;n6_4.Visibility = Visibility.Hidden;
+                n7_1.Visibility = Visibility.Hidden;n7_2.Visibility = Visibility.Hidden;n7_3.Visibility = Visibility.Hidden;n7_4.Visibility = Visibility.Hidden;
+                n8_1.Visibility = Visibility.Hidden;n8_2.Visibility = Visibility.Hidden;n8_3.Visibility = Visibility.Hidden;n8_4.Visibility = Visibility.Hidden;
+                n9_1.Visibility = Visibility.Hidden;n9_2.Visibility = Visibility.Hidden;n9_3.Visibility = Visibility.Hidden;n9_4.Visibility = Visibility.Hidden;
             }
             if(k_s.Text=="4")
             {
-                n2_1.Visibility = Visibility.Visible;
-                n2_2.Visibility = Visibility.Visible;
-                n2_3.Visibility = Visibility.Visible;
-                n2_4.Visibility = Visibility.Visible;
-                n3_1.Visibility = Visibility.Visible;
-                n3_2.Visibility = Visibility.Visible;
-                n3_3.Visibility = Visibility.Visible;
-                n3_4.Visibility = Visibility.Visible;
-                n4_1.Visibility = Visibility.Visible;
-                n4_2.Visibility = Visibility.Visible;
-                n4_3.Visibility = Visibility.Visible;
-                n4_4.Visibility = Visibility.Visible;
-                n5_1.Visibility = Visibility.Hidden;
-                n5_2.Visibility = Visibility.Hidden;
-                n5_3.Visibility = Visibility.Hidden;
-                n5_4.Visibility = Visibility.Hidden;
-                n6_1.Visibility = Visibility.Hidden;
-                n6_2.Visibility = Visibility.Hidden;
-                n6_3.Visibility = Visibility.Hidden;
-                n6_4.Visibility = Visibility.Hidden;
-                n7_1.Visibility = Visibility.Hidden;
-                n7_2.Visibility = Visibility.Hidden;
-                n7_3.Visibility = Visibility.Hidden;
-                n7_4.Visibility = Visibility.Hidden;
-                n8_1.Visibility = Visibility.Hidden;
-                n8_2.Visibility = Visibility.Hidden;
-                n8_3.Visibility = Visibility.Hidden;
-                n8_4.Visibility = Visibility.Hidden;
-                n9_1.Visibility = Visibility.Hidden;
-                n9_2.Visibility = Visibility.Hidden;
-                n9_3.Visibility = Visibility.Hidden;
-                n9_4.Visibility = Visibility.Hidden;
+                n2_1.Visibility = Visibility.Visible;n2_2.Visibility = Visibility.Visible;n2_3.Visibility = Visibility.Visible;n2_4.Visibility = Visibility.Visible;
+                n3_1.Visibility = Visibility.Visible;n3_2.Visibility = Visibility.Visible;n3_3.Visibility = Visibility.Visible;n3_4.Visibility = Visibility.Visible;
+                n4_1.Visibility = Visibility.Visible;n4_2.Visibility = Visibility.Visible;n4_3.Visibility = Visibility.Visible;n4_4.Visibility = Visibility.Visible;
+                n5_1.Visibility = Visibility.Hidden;n5_2.Visibility = Visibility.Hidden;n5_3.Visibility = Visibility.Hidden;n5_4.Visibility = Visibility.Hidden;
+                n6_1.Visibility = Visibility.Hidden;n6_2.Visibility = Visibility.Hidden;n6_3.Visibility = Visibility.Hidden;n6_4.Visibility = Visibility.Hidden;
+                n7_1.Visibility = Visibility.Hidden;n7_2.Visibility = Visibility.Hidden;n7_3.Visibility = Visibility.Hidden;n7_4.Visibility = Visibility.Hidden;
+                n8_1.Visibility = Visibility.Hidden;n8_2.Visibility = Visibility.Hidden;n8_3.Visibility = Visibility.Hidden;n8_4.Visibility = Visibility.Hidden;
+                n9_1.Visibility = Visibility.Hidden;n9_2.Visibility = Visibility.Hidden;n9_3.Visibility = Visibility.Hidden;n9_4.Visibility = Visibility.Hidden;
             }
             if(k_s.Text=="5")
             {
-                n2_1.Visibility = Visibility.Visible;
-                n2_2.Visibility = Visibility.Visible;
-                n2_3.Visibility = Visibility.Visible;
-                n2_4.Visibility = Visibility.Visible;
-                n3_1.Visibility = Visibility.Visible;
-                n3_2.Visibility = Visibility.Visible;
-                n3_3.Visibility = Visibility.Visible;
-                n3_4.Visibility = Visibility.Visible;
-                n4_1.Visibility = Visibility.Visible;
-                n4_2.Visibility = Visibility.Visible;
-                n4_3.Visibility = Visibility.Visible;
-                n4_4.Visibility = Visibility.Visible;
-                n5_1.Visibility = Visibility.Visible;
-                n5_2.Visibility = Visibility.Visible;
-                n5_3.Visibility = Visibility.Visible;
-                n5_4.Visibility = Visibility.Visible;
-                n6_1.Visibility = Visibility.Hidden;
-                n6_2.Visibility = Visibility.Hidden;
-                n6_3.Visibility = Visibility.Hidden;
-                n6_4.Visibility = Visibility.Hidden;
-                n7_1.Visibility = Visibility.Hidden;
-                n7_2.Visibility = Visibility.Hidden;
-                n7_3.Visibility = Visibility.Hidden;
-                n7_4.Visibility = Visibility.Hidden;
-                n8_1.Visibility = Visibility.Hidden;
-                n8_2.Visibility = Visibility.Hidden;
-                n8_3.Visibility = Visibility.Hidden;
-                n8_4.Visibility = Visibility.Hidden;
-                n9_1.Visibility = Visibility.Hidden;
-                n9_2.Visibility = Visibility.Hidden;
-                n9_3.Visibility = Visibility.Hidden;
-                n9_4.Visibility = Visibility.Hidden;
+                n2_1.Visibility = Visibility.Visible;n2_2.Visibility = Visibility.Visible;n2_3.Visibility = Visibility.Visible;n2_4.Visibility = Visibility.Visible;
+                n3_1.Visibility = Visibility.Visible;n3_2.Visibility = Visibility.Visible;n3_3.Visibility = Visibility.Visible;n3_4.Visibility = Visibility.Visible;
+                n4_1.Visibility = Visibility.Visible;n4_2.Visibility = Visibility.Visible;n4_3.Visibility = Visibility.Visible;n4_4.Visibility = Visibility.Visible;
+                n5_1.Visibility = Visibility.Visible;n5_2.Visibility = Visibility.Visible;n5_3.Visibility = Visibility.Visible;n5_4.Visibility = Visibility.Visible;
+                n6_1.Visibility = Visibility.Hidden;n6_2.Visibility = Visibility.Hidden;n6_3.Visibility = Visibility.Hidden;n6_4.Visibility = Visibility.Hidden;
+                n7_1.Visibility = Visibility.Hidden;n7_2.Visibility = Visibility.Hidden;n7_3.Visibility = Visibility.Hidden;n7_4.Visibility = Visibility.Hidden;
+                n8_1.Visibility = Visibility.Hidden;n8_2.Visibility = Visibility.Hidden;n8_3.Visibility = Visibility.Hidden;n8_4.Visibility = Visibility.Hidden;
+                n9_1.Visibility = Visibility.Hidden;n9_2.Visibility = Visibility.Hidden;n9_3.Visibility = Visibility.Hidden;n9_4.Visibility = Visibility.Hidden;
             }
             if(k_s.Text=="6")
             {
-                n2_1.Visibility = Visibility.Visible;
-                n2_2.Visibility = Visibility.Visible;
-                n2_3.Visibility = Visibility.Visible;
-                n2_4.Visibility = Visibility.Visible;
-                n3_1.Visibility = Visibility.Visible;
-                n3_2.Visibility = Visibility.Visible;
-                n3_3.Visibility = Visibility.Visible;
-                n3_4.Visibility = Visibility.Visible;
-                n4_1.Visibility = Visibility.Visible;
-                n4_2.Visibility = Visibility.Visible;
-                n4_3.Visibility = Visibility.Visible;
-                n4_4.Visibility = Visibility.Visible;
-                n5_1.Visibility = Visibility.Visible;
-                n5_2.Visibility = Visibility.Visible;
-                n5_3.Visibility = Visibility.Visible;
-                n5_4.Visibility = Visibility.Visible;
-                n6_1.Visibility = Visibility.Visible;
-                n6_2.Visibility = Visibility.Visible;
-                n6_3.Visibility = Visibility.Visible;
-                n6_4.Visibility = Visibility.Visible;
-                n7_1.Visibility = Visibility.Hidden;
-                n7_2.Visibility = Visibility.Hidden;
-                n7_3.Visibility = Visibility.Hidden;
-                n7_4.Visibility = Visibility.Hidden;
-                n8_1.Visibility = Visibility.Hidden;
-                n8_2.Visibility = Visibility.Hidden;
-                n8_3.Visibility = Visibility.Hidden;
-                n8_4.Visibility = Visibility.Hidden;
-                n9_1.Visibility = Visibility.Hidden;
-                n9_2.Visibility = Visibility.Hidden;
-                n9_3.Visibility = Visibility.Hidden;
-                n9_4.Visibility = Visibility.Hidden;
+                n2_1.Visibility = Visibility.Visible;n2_2.Visibility = Visibility.Visible;n2_3.Visibility = Visibility.Visible;n2_4.Visibility = Visibility.Visible;
+                n3_1.Visibility = Visibility.Visible;n3_2.Visibility = Visibility.Visible;n3_3.Visibility = Visibility.Visible;n3_4.Visibility = Visibility.Visible;
+                n4_1.Visibility = Visibility.Visible;n4_2.Visibility = Visibility.Visible;n4_3.Visibility = Visibility.Visible;n4_4.Visibility = Visibility.Visible;
+                n5_1.Visibility = Visibility.Visible;n5_2.Visibility = Visibility.Visible;n5_3.Visibility = Visibility.Visible;n5_4.Visibility = Visibility.Visible;
+                n6_1.Visibility = Visibility.Visible;n6_2.Visibility = Visibility.Visible;n6_3.Visibility = Visibility.Visible;n6_4.Visibility = Visibility.Visible;
+                n7_1.Visibility = Visibility.Hidden;n7_2.Visibility = Visibility.Hidden;n7_3.Visibility = Visibility.Hidden;n7_4.Visibility = Visibility.Hidden;
+                n8_1.Visibility = Visibility.Hidden;n8_2.Visibility = Visibility.Hidden;n8_3.Visibility = Visibility.Hidden;n8_4.Visibility = Visibility.Hidden;
+                n9_1.Visibility = Visibility.Hidden;n9_2.Visibility = Visibility.Hidden;n9_3.Visibility = Visibility.Hidden;n9_4.Visibility = Visibility.Hidden;
             }
             if(k_s.Text=="7")
             {   
-                n2_1.Visibility = Visibility.Visible;
-                n2_2.Visibility = Visibility.Visible;
-                n2_3.Visibility = Visibility.Visible;
-                n2_4.Visibility = Visibility.Visible;
-                n3_1.Visibility = Visibility.Visible;
-                n3_2.Visibility = Visibility.Visible;
-                n3_3.Visibility = Visibility.Visible;
-                n3_4.Visibility = Visibility.Visible;
-                n4_1.Visibility = Visibility.Visible;
-                n4_2.Visibility = Visibility.Visible;
-                n4_3.Visibility = Visibility.Visible;
-                n4_4.Visibility = Visibility.Visible;
-                n5_1.Visibility = Visibility.Visible;
-                n5_2.Visibility = Visibility.Visible;
-                n5_3.Visibility = Visibility.Visible;
-                n5_4.Visibility = Visibility.Visible;
-                n6_1.Visibility = Visibility.Visible;
-                n6_2.Visibility = Visibility.Visible;
-                n6_3.Visibility = Visibility.Visible;
-                n6_4.Visibility = Visibility.Visible;
-                n7_1.Visibility = Visibility.Visible;
-                n7_2.Visibility = Visibility.Visible;
-                n7_3.Visibility = Visibility.Visible;
-                n7_4.Visibility = Visibility.Visible;
-                n8_1.Visibility = Visibility.Hidden;
-                n8_2.Visibility = Visibility.Hidden;
-                n8_3.Visibility = Visibility.Hidden;
-                n8_4.Visibility = Visibility.Hidden;
-                n9_1.Visibility = Visibility.Hidden;
-                n9_2.Visibility = Visibility.Hidden;
-                n9_3.Visibility = Visibility.Hidden;
-                n9_4.Visibility = Visibility.Hidden;
+                n2_1.Visibility = Visibility.Visible;n2_2.Visibility = Visibility.Visible;n2_3.Visibility = Visibility.Visible;n2_4.Visibility = Visibility.Visible;
+                n3_1.Visibility = Visibility.Visible;n3_2.Visibility = Visibility.Visible;n3_3.Visibility = Visibility.Visible;n3_4.Visibility = Visibility.Visible;
+                n4_1.Visibility = Visibility.Visible;n4_2.Visibility = Visibility.Visible;n4_3.Visibility = Visibility.Visible;n4_4.Visibility = Visibility.Visible;
+                n5_1.Visibility = Visibility.Visible;n5_2.Visibility = Visibility.Visible;n5_3.Visibility = Visibility.Visible;n5_4.Visibility = Visibility.Visible;
+                n6_1.Visibility = Visibility.Visible;n6_2.Visibility = Visibility.Visible;n6_3.Visibility = Visibility.Visible;n6_4.Visibility = Visibility.Visible;
+                n7_1.Visibility = Visibility.Visible;n7_2.Visibility = Visibility.Visible;n7_3.Visibility = Visibility.Visible;n7_4.Visibility = Visibility.Visible;
+                n8_1.Visibility = Visibility.Hidden;n8_2.Visibility = Visibility.Hidden;n8_3.Visibility = Visibility.Hidden;n8_4.Visibility = Visibility.Hidden;
+                n9_1.Visibility = Visibility.Hidden;n9_2.Visibility = Visibility.Hidden;n9_3.Visibility = Visibility.Hidden;n9_4.Visibility = Visibility.Hidden;
             }
             if(k_s.Text=="8")
             {
-                n2_1.Visibility = Visibility.Visible;
-                n2_2.Visibility = Visibility.Visible;
-                n2_3.Visibility = Visibility.Visible;
-                n2_4.Visibility = Visibility.Visible;
-                n3_1.Visibility = Visibility.Visible;
-                n3_2.Visibility = Visibility.Visible;
-                n3_3.Visibility = Visibility.Visible;
-                n3_4.Visibility = Visibility.Visible;
-                n4_1.Visibility = Visibility.Visible;
-                n4_2.Visibility = Visibility.Visible;
-                n4_3.Visibility = Visibility.Visible;
-                n4_4.Visibility = Visibility.Visible;
-                n5_1.Visibility = Visibility.Visible;
-                n5_2.Visibility = Visibility.Visible;
-                n5_3.Visibility = Visibility.Visible;
-                n5_4.Visibility = Visibility.Visible;
-                n6_1.Visibility = Visibility.Visible;
-                n6_2.Visibility = Visibility.Visible;
-                n6_3.Visibility = Visibility.Visible;
-                n6_4.Visibility = Visibility.Visible;
-                n7_1.Visibility = Visibility.Visible;
-                n7_2.Visibility = Visibility.Visible;
-                n7_3.Visibility = Visibility.Visible;
-                n7_4.Visibility = Visibility.Visible;
-                n8_1.Visibility = Visibility.Visible;
-                n8_2.Visibility = Visibility.Visible;
-                n8_3.Visibility = Visibility.Visible;
-                n8_4.Visibility = Visibility.Visible;
-                n9_1.Visibility = Visibility.Hidden;
-                n9_2.Visibility = Visibility.Hidden;
-                n9_3.Visibility = Visibility.Hidden;
-                n9_4.Visibility = Visibility.Hidden;
+                n2_1.Visibility = Visibility.Visible;n2_2.Visibility = Visibility.Visible;n2_3.Visibility = Visibility.Visible;n2_4.Visibility = Visibility.Visible;
+                n3_1.Visibility = Visibility.Visible;n3_2.Visibility = Visibility.Visible;n3_3.Visibility = Visibility.Visible;n3_4.Visibility = Visibility.Visible;
+                n4_1.Visibility = Visibility.Visible;n4_2.Visibility = Visibility.Visible;n4_3.Visibility = Visibility.Visible;n4_4.Visibility = Visibility.Visible;
+                n5_1.Visibility = Visibility.Visible;n5_2.Visibility = Visibility.Visible;n5_3.Visibility = Visibility.Visible;n5_4.Visibility = Visibility.Visible;
+                n6_1.Visibility = Visibility.Visible;n6_2.Visibility = Visibility.Visible;n6_3.Visibility = Visibility.Visible;n6_4.Visibility = Visibility.Visible;
+                n7_1.Visibility = Visibility.Visible;n7_2.Visibility = Visibility.Visible;n7_3.Visibility = Visibility.Visible;n7_4.Visibility = Visibility.Visible;
+                n8_1.Visibility = Visibility.Visible;n8_2.Visibility = Visibility.Visible;n8_3.Visibility = Visibility.Visible;n8_4.Visibility = Visibility.Visible;
+                n9_1.Visibility = Visibility.Hidden;n9_2.Visibility = Visibility.Hidden;n9_3.Visibility = Visibility.Hidden;n9_4.Visibility = Visibility.Hidden;
             }
             if(k_s.Text=="9")
             {
-                n2_1.Visibility = Visibility.Visible;
-                n2_2.Visibility = Visibility.Visible;
-                n2_3.Visibility = Visibility.Visible;
-                n2_4.Visibility = Visibility.Visible;
-                n3_1.Visibility = Visibility.Visible;
-                n3_2.Visibility = Visibility.Visible;
-                n3_3.Visibility = Visibility.Visible;
-                n3_4.Visibility = Visibility.Visible;
-                n4_1.Visibility = Visibility.Visible;
-                n4_2.Visibility = Visibility.Visible;
-                n4_3.Visibility = Visibility.Visible;
-                n4_4.Visibility = Visibility.Visible;
-                n5_1.Visibility = Visibility.Visible;
-                n5_2.Visibility = Visibility.Visible;
-                n5_3.Visibility = Visibility.Visible;
-                n5_4.Visibility = Visibility.Visible;
-                n6_1.Visibility = Visibility.Visible;
-                n6_2.Visibility = Visibility.Visible;
-                n6_3.Visibility = Visibility.Visible;
-                n6_4.Visibility = Visibility.Visible;
-                n7_1.Visibility = Visibility.Visible;
-                n7_2.Visibility = Visibility.Visible;
-                n7_3.Visibility = Visibility.Visible;
-                n7_4.Visibility = Visibility.Visible;
-                n8_1.Visibility = Visibility.Visible;
-                n8_2.Visibility = Visibility.Visible;
-                n8_3.Visibility = Visibility.Visible;
-                n8_4.Visibility = Visibility.Visible;
-                n9_1.Visibility = Visibility.Visible;
-                n9_2.Visibility = Visibility.Visible;
-                n9_3.Visibility = Visibility.Visible;
-                n9_4.Visibility = Visibility.Visible;
+                n2_1.Visibility = Visibility.Visible;n2_2.Visibility = Visibility.Visible;n2_3.Visibility = Visibility.Visible;n2_4.Visibility = Visibility.Visible;
+                n3_1.Visibility = Visibility.Visible;n3_2.Visibility = Visibility.Visible;n3_3.Visibility = Visibility.Visible;n3_4.Visibility = Visibility.Visible;
+                n4_1.Visibility = Visibility.Visible;n4_2.Visibility = Visibility.Visible;n4_3.Visibility = Visibility.Visible;n4_4.Visibility = Visibility.Visible;
+                n5_1.Visibility = Visibility.Visible;n5_2.Visibility = Visibility.Visible;n5_3.Visibility = Visibility.Visible;n5_4.Visibility = Visibility.Visible;
+                n6_1.Visibility = Visibility.Visible;n6_2.Visibility = Visibility.Visible;n6_3.Visibility = Visibility.Visible;n6_4.Visibility = Visibility.Visible;
+                n7_1.Visibility = Visibility.Visible;n7_2.Visibility = Visibility.Visible;n7_3.Visibility = Visibility.Visible;n7_4.Visibility = Visibility.Visible;
+                n8_1.Visibility = Visibility.Visible;n8_2.Visibility = Visibility.Visible;n8_3.Visibility = Visibility.Visible;n8_4.Visibility = Visibility.Visible;
+                n9_1.Visibility = Visibility.Visible;n9_2.Visibility = Visibility.Visible;n9_3.Visibility = Visibility.Visible;n9_4.Visibility = Visibility.Visible;
             }
         }
-
-        private void n_2_Checked(object sender, RoutedEventArgs e)
-        {
-           
-            Rn_t.Visibility = Visibility.Hidden;
-            H_t.Visibility = Visibility.Hidden;
-        }
-
-        private void n_1_Checked(object sender, RoutedEventArgs e)
-        {
-            Ri_t.Visibility = Visibility.Visible;
-            Rn_t.Visibility = Visibility.Visible;
-            H_t.Visibility = Visibility.Visible;
-        }
-
         private void Ri_t_TextChanged(object sender, TextChangedEventArgs e)
         {
             n1_4.Text = Ri_t.Text;
         }
-
         private void Rn_t_TextChanged(object sender, TextChangedEventArgs e)
         {
             n9_4.Text = Rn_t.Text;
         }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
-        {   
-            using (Table_context db = new Table_context())
-            {
-               
-                var a = db.table.Where(c => c.Id ==1).FirstOrDefault(); 
-                a.o_s_base = 10;
+        {
+            Regex X = new Regex(@"^\d*(\,\d+)?$");
 
-                    Table_base n1 = new Table_base { t1_1 = Convert.ToDouble(n1_1.Text), t1_2 = Convert.ToDouble(n1_2.Text), t1_3 = Convert.ToDouble(n1_3.Text), t1_4 = Convert.ToDouble(n1_4.Text),
-                    t2_1 = Convert.ToDouble(n2_1.Text), t2_2 = Convert.ToDouble(n2_2.Text), t2_3 = Convert.ToDouble(n2_3.Text), t2_4 = Convert.ToDouble(n2_4.Text),
-                    t3_1 = Convert.ToDouble(n3_1.Text), t3_2 = Convert.ToDouble(n3_2.Text), t3_3 = Convert.ToDouble(n3_3.Text), t3_4 = Convert.ToDouble(n3_4.Text),
-                    t4_1 = Convert.ToDouble(n4_1.Text), t4_2 = Convert.ToDouble(n4_2.Text), t4_3 = Convert.ToDouble(n4_3.Text), t4_4 = Convert.ToDouble(n4_4.Text),
-                    t5_1 = Convert.ToDouble(n5_1.Text), t5_2 = Convert.ToDouble(n5_2.Text), t5_3 = Convert.ToDouble(n5_3.Text), t5_4 = Convert.ToDouble(n5_4.Text),
-                    t6_1 = Convert.ToDouble(n6_1.Text), t6_2 = Convert.ToDouble(n6_2.Text), t6_3 = Convert.ToDouble(n6_3.Text), t6_4 = Convert.ToDouble(n6_4.Text),
-                    t7_1 = Convert.ToDouble(n7_1.Text), t7_2 = Convert.ToDouble(n7_2.Text), t7_3 = Convert.ToDouble(n7_3.Text), t7_4 = Convert.ToDouble(n7_4.Text),
-                    t8_1 = Convert.ToDouble(n8_1.Text), t8_2 = Convert.ToDouble(n8_2.Text), t8_3 = Convert.ToDouble(n8_3.Text), t8_4 = Convert.ToDouble(n8_4.Text),
-                    t9_1 = Convert.ToDouble(n9_1.Text), t9_2 = Convert.ToDouble(n9_2.Text), t9_3 = Convert.ToDouble(n9_3.Text), t9_4 = Convert.ToDouble(n9_4.Text),
-                    k_t_base = Convert.ToDouble(k_t.Text), k_s_base = Convert.ToDouble(k_s.Text), o_s_base = Convert.ToDouble(o_n.Text), p_p_base = Convert.ToDouble(p_p.Text), v_r_base = Convert.ToDouble(v_r.Text),
-                    ri_base = Convert.ToDouble(Ri_t.Text), rn_base = Convert.ToDouble(Rn_t.Text), h_base = Convert.ToDouble(H_t.Text)};
-                    
-                db.table.Add(n1);
-                db.SaveChanges();
-               /* if (save_flag == true)
+            if (X.IsMatch(n1_1.Text) && (X.IsMatch(n1_2.Text)) && (X.IsMatch(n1_3.Text)) && (X.IsMatch(n1_4.Text)) && (X.IsMatch(n2_1.Text)) && (X.IsMatch(n2_2.Text)) &&
+                  (X.IsMatch(n2_3.Text)) && (X.IsMatch(n2_4.Text)) && (X.IsMatch(n3_1.Text)) && (X.IsMatch(n3_2.Text)) && (X.IsMatch(n3_3.Text)) && (X.IsMatch(n3_4.Text)) &&
+                  (X.IsMatch(n4_1.Text)) && (X.IsMatch(n4_2.Text)) && (X.IsMatch(n4_3.Text)) && (X.IsMatch(n4_4.Text)) && (X.IsMatch(n5_1.Text)) && (X.IsMatch(n5_2.Text)) &&
+                  (X.IsMatch(n5_3.Text)) && (X.IsMatch(n5_4.Text)) && (X.IsMatch(n6_1.Text)) && (X.IsMatch(n6_2.Text)) && (X.IsMatch(n6_3.Text)) && (X.IsMatch(n6_4.Text)) &&
+                  (X.IsMatch(n7_1.Text)) && (X.IsMatch(n7_2.Text)) && (X.IsMatch(n7_3.Text)) && (X.IsMatch(n7_4.Text)) && (X.IsMatch(n8_1.Text)) && (X.IsMatch(n8_2.Text)) &&
+                  (X.IsMatch(n8_3.Text)) && (X.IsMatch(n8_4.Text)) && (X.IsMatch(n9_1.Text)) && (X.IsMatch(n9_2.Text)) && (X.IsMatch(n9_3.Text)) && (X.IsMatch(n9_4.Text)) &&
+                  (X.IsMatch(k_t.Text)) && (X.IsMatch(k_s.Text)) && (X.IsMatch(o_n.Text)) && (X.IsMatch(p_p.Text)) && (X.IsMatch(v_r.Text)) && (X.IsMatch(Ri_t.Text)) && (X.IsMatch(Rn_t.Text)) && (X.IsMatch(H_t.Text)))
+            {
+                if (string.IsNullOrWhiteSpace(k_t.Text) || string.IsNullOrWhiteSpace(k_s.Text) || string.IsNullOrWhiteSpace(o_n.Text) || string.IsNullOrWhiteSpace(p_p.Text) ||
+                    string.IsNullOrWhiteSpace(v_r.Text) || string.IsNullOrWhiteSpace(Ri_t.Text) || string.IsNullOrWhiteSpace(Rn_t.Text) || string.IsNullOrWhiteSpace(H_t.Text) ||
+                    string.IsNullOrWhiteSpace(n1_1.Text) || string.IsNullOrWhiteSpace(n1_2.Text) || string.IsNullOrWhiteSpace(n1_3.Text) || string.IsNullOrWhiteSpace(n1_4.Text) ||
+                    string.IsNullOrWhiteSpace(n2_1.Text) || string.IsNullOrWhiteSpace(n2_2.Text) || string.IsNullOrWhiteSpace(n2_3.Text) || string.IsNullOrWhiteSpace(n2_4.Text) ||
+                    string.IsNullOrWhiteSpace(n3_1.Text) || string.IsNullOrWhiteSpace(n3_2.Text) || string.IsNullOrWhiteSpace(n3_3.Text) || string.IsNullOrWhiteSpace(n3_4.Text) ||
+                    string.IsNullOrWhiteSpace(n4_1.Text) || string.IsNullOrWhiteSpace(n4_2.Text) || string.IsNullOrWhiteSpace(n4_3.Text) || string.IsNullOrWhiteSpace(n4_4.Text) ||
+                    string.IsNullOrWhiteSpace(n5_1.Text) || string.IsNullOrWhiteSpace(n5_2.Text) || string.IsNullOrWhiteSpace(n5_3.Text) || string.IsNullOrWhiteSpace(n5_4.Text) ||
+                    string.IsNullOrWhiteSpace(n6_1.Text) || string.IsNullOrWhiteSpace(n6_2.Text) || string.IsNullOrWhiteSpace(n6_3.Text) || string.IsNullOrWhiteSpace(n6_4.Text) ||
+                    string.IsNullOrWhiteSpace(n7_1.Text) || string.IsNullOrWhiteSpace(n7_2.Text) || string.IsNullOrWhiteSpace(n7_3.Text) || string.IsNullOrWhiteSpace(n7_4.Text) ||
+                    string.IsNullOrWhiteSpace(n8_1.Text) || string.IsNullOrWhiteSpace(n8_2.Text) || string.IsNullOrWhiteSpace(n8_3.Text) || string.IsNullOrWhiteSpace(n8_4.Text) ||
+                    string.IsNullOrWhiteSpace(n9_1.Text) || string.IsNullOrWhiteSpace(n9_2.Text) || string.IsNullOrWhiteSpace(n9_3.Text) || string.IsNullOrWhiteSpace(n9_4.Text)
+
+                    )
                 {
-                    Table_base p1 = db.table.FirstOrDefault();
-                    
-                    
-                    if (p1 != null)
+                    MessageBox.Show("Ошибка ввода!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    using (Table_context db = new Table_context())
                     {
-                        db.table.Remove(p1);
+                        Table_base n1 = new Table_base
+                        {
+                            t1_1 = Convert.ToDouble(n1_1.Text),t1_2 = Convert.ToDouble(n1_2.Text),t1_3 = Convert.ToDouble(n1_3.Text),t1_4 = Convert.ToDouble(n1_4.Text),
+                            t2_1 = Convert.ToDouble(n2_1.Text),t2_2 = Convert.ToDouble(n2_2.Text),t2_3 = Convert.ToDouble(n2_3.Text),t2_4 = Convert.ToDouble(n2_4.Text),
+                            t3_1 = Convert.ToDouble(n3_1.Text),t3_2 = Convert.ToDouble(n3_2.Text),t3_3 = Convert.ToDouble(n3_3.Text),t3_4 = Convert.ToDouble(n3_4.Text),
+                            t4_1 = Convert.ToDouble(n4_1.Text),t4_2 = Convert.ToDouble(n4_2.Text),t4_3 = Convert.ToDouble(n4_3.Text),t4_4 = Convert.ToDouble(n4_4.Text),
+                            t5_1 = Convert.ToDouble(n5_1.Text),t5_2 = Convert.ToDouble(n5_2.Text),t5_3 = Convert.ToDouble(n5_3.Text),t5_4 = Convert.ToDouble(n5_4.Text),
+                            t6_1 = Convert.ToDouble(n6_1.Text),t6_2 = Convert.ToDouble(n6_2.Text),t6_3 = Convert.ToDouble(n6_3.Text),t6_4 = Convert.ToDouble(n6_4.Text),
+                            t7_1 = Convert.ToDouble(n7_1.Text),t7_2 = Convert.ToDouble(n7_2.Text),t7_3 = Convert.ToDouble(n7_3.Text),t7_4 = Convert.ToDouble(n7_4.Text),
+                            t8_1 = Convert.ToDouble(n8_1.Text),t8_2 = Convert.ToDouble(n8_2.Text),t8_3 = Convert.ToDouble(n8_3.Text),t8_4 = Convert.ToDouble(n8_4.Text),
+                            t9_1 = Convert.ToDouble(n9_1.Text),t9_2 = Convert.ToDouble(n9_2.Text),t9_3 = Convert.ToDouble(n9_3.Text),t9_4 = Convert.ToDouble(n9_4.Text),
+                            k_t_base = Convert.ToDouble(k_t.Text),
+                            k_s_base = Convert.ToDouble(k_s.Text),
+                            o_s_base = Convert.ToDouble(o_n.Text),
+                            p_p_base = Convert.ToDouble(p_p.Text),
+                            v_r_base = Convert.ToDouble(v_r.Text),
+                            ri_base = Convert.ToDouble(Ri_t.Text),
+                            rn_base = Convert.ToDouble(Rn_t.Text),
+                            h_base = Convert.ToDouble(H_t.Text)
+                        };
+
+                        db.table.Add(n1);
                         db.SaveChanges();
                     }
-                }*/
-            }
-            
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            
-            using (Table_context db = new Table_context())
-            {
-                
-                var Table = db.table;
-                foreach (Table_base u in Table)
-                {
-                  
-                    n1_1.Text = Convert.ToString(u.t1_1);n1_2.Text = Convert.ToString(u.t1_2);n1_3.Text = Convert.ToString(u.t1_3);n1_4.Text = Convert.ToString(u.t1_4);
-                    n2_1.Text = Convert.ToString(u.t2_1);n2_2.Text = Convert.ToString(u.t2_2);n2_3.Text = Convert.ToString(u.t2_3);n2_4.Text = Convert.ToString(u.t2_4);
-                    n3_1.Text = Convert.ToString(u.t3_1);n3_2.Text = Convert.ToString(u.t3_2);n3_3.Text = Convert.ToString(u.t3_3);n3_4.Text = Convert.ToString(u.t3_4);
-                    n4_1.Text = Convert.ToString(u.t4_1); n4_2.Text = Convert.ToString(u.t4_2); n4_3.Text = Convert.ToString(u.t4_3); n4_4.Text = Convert.ToString(u.t4_4);
-                    n5_1.Text = Convert.ToString(u.t5_1); n5_2.Text = Convert.ToString(u.t5_2); n5_3.Text = Convert.ToString(u.t5_3); n5_4.Text = Convert.ToString(u.t5_4);
-                    n6_1.Text = Convert.ToString(u.t6_1); n6_2.Text = Convert.ToString(u.t6_2); n6_3.Text = Convert.ToString(u.t6_3); n6_4.Text = Convert.ToString(u.t6_4);
-                    n7_1.Text = Convert.ToString(u.t7_1); n7_2.Text = Convert.ToString(u.t7_2); n7_3.Text = Convert.ToString(u.t7_3); n7_4.Text = Convert.ToString(u.t7_4);
-                    n8_1.Text = Convert.ToString(u.t8_1); n8_2.Text = Convert.ToString(u.t8_2); n8_3.Text = Convert.ToString(u.t8_3); n8_4.Text = Convert.ToString(u.t8_4);
-                    n9_1.Text = Convert.ToString(u.t9_1); n9_2.Text = Convert.ToString(u.t9_2); n9_3.Text = Convert.ToString(u.t9_3); n9_4.Text = Convert.ToString(u.t9_4);
-                    Ri_t.Text = Convert.ToString(u.ri_base);Rn_t.Text = Convert.ToString(u.rn_base);H_t.Text = Convert.ToString(u.h_base);k_t.Text = Convert.ToString(u.k_t_base);
-                    k_s.Text = Convert.ToString(u.k_s_base);o_n.Text = Convert.ToString(u.o_s_base);p_p.Text = Convert.ToString(u.p_p_base);v_r.Text=Convert.ToString(u.v_r_base) ;
                 }
-                save_flag = true;
-              
-
             }
-                
-            
+            else
+            {
+                MessageBox.Show("Ошибка ввода!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
         }
-
-
-
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
             using (Table_context db = new Table_context())
@@ -746,12 +522,23 @@ namespace AR
                 
                 System.Data.SqlClient.SqlParameter param = new System.Data.SqlClient.SqlParameter("@Id", "%"+box.SelectedItem+"");
                 var table = db.Database.SqlQuery<Table_base>("SELECT * FROM Table_base WHERE Id LIKE @Id",param);
-                
                 foreach (var table_base in table)
                 {
+                    k_t.Text = Convert.ToString(table_base.k_t_base);
+                    k_s.Text = Convert.ToString(table_base.k_s_base);
                     o_n.Text = Convert.ToString(table_base.o_s_base);
-                    
-                    
+                    p_p.Text = Convert.ToString(table_base.p_p_base);
+                    v_r.Text = Convert.ToString(table_base.v_r_base);
+                    n1_1.Text = Convert.ToString(table_base.t1_1);n1_2.Text = Convert.ToString(table_base.t1_2);n1_3.Text = Convert.ToString(table_base.t1_3);n1_4.Text = Convert.ToString(table_base.t1_4);
+                    n2_1.Text = Convert.ToString(table_base.t2_1); n2_2.Text = Convert.ToString(table_base.t2_2); n2_3.Text = Convert.ToString(table_base.t2_3); n2_4.Text = Convert.ToString(table_base.t2_4);
+                    n3_1.Text = Convert.ToString(table_base.t3_1); n3_2.Text = Convert.ToString(table_base.t3_2); n3_3.Text = Convert.ToString(table_base.t3_3); n3_4.Text = Convert.ToString(table_base.t3_4);
+                    n4_1.Text = Convert.ToString(table_base.t4_1); n4_2.Text = Convert.ToString(table_base.t4_2); n4_3.Text = Convert.ToString(table_base.t4_3); n4_4.Text = Convert.ToString(table_base.t4_4);
+                    n5_1.Text = Convert.ToString(table_base.t5_1); n5_2.Text = Convert.ToString(table_base.t5_2); n5_3.Text = Convert.ToString(table_base.t5_3); n5_4.Text = Convert.ToString(table_base.t5_4);
+                    n6_1.Text = Convert.ToString(table_base.t6_1); n6_2.Text = Convert.ToString(table_base.t6_2); n6_3.Text = Convert.ToString(table_base.t6_3); n6_4.Text = Convert.ToString(table_base.t6_4);
+                    n7_1.Text = Convert.ToString(table_base.t7_1); n7_2.Text = Convert.ToString(table_base.t7_2); n7_3.Text = Convert.ToString(table_base.t7_3); n7_4.Text = Convert.ToString(table_base.t7_4);
+                    n8_1.Text = Convert.ToString(table_base.t8_1); n8_2.Text = Convert.ToString(table_base.t8_2); n8_3.Text = Convert.ToString(table_base.t8_3); n8_4.Text = Convert.ToString(table_base.t8_4);
+                    n9_1.Text = Convert.ToString(table_base.t9_1); n9_2.Text = Convert.ToString(table_base.t9_2); n9_3.Text = Convert.ToString(table_base.t9_3); n9_4.Text = Convert.ToString(table_base.t9_4);
+                    Ri_t.Text = Convert.ToString(table_base.ri_base);Rn_t.Text = Convert.ToString(table_base.rn_base);H_t.Text = Convert.ToString(table_base.h_base);
                 }
             }
 
@@ -767,53 +554,76 @@ namespace AR
                 box.Items.Add(s);
             }
         }
-
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            using (Table_context db = new Table_context())
+            Regex X = new Regex(@"^\d*(\,\d+)?$");
+
+            if (X.IsMatch(n1_1.Text) && (X.IsMatch(n1_2.Text)) && (X.IsMatch(n1_3.Text)) && (X.IsMatch(n1_4.Text)) && (X.IsMatch(n2_1.Text)) && (X.IsMatch(n2_2.Text)) &&
+                  (X.IsMatch(n2_3.Text)) && (X.IsMatch(n2_4.Text)) && (X.IsMatch(n3_1.Text)) && (X.IsMatch(n3_2.Text)) && (X.IsMatch(n3_3.Text)) && (X.IsMatch(n3_4.Text)) &&
+                  (X.IsMatch(n4_1.Text)) && (X.IsMatch(n4_2.Text)) && (X.IsMatch(n4_3.Text)) && (X.IsMatch(n4_4.Text)) && (X.IsMatch(n5_1.Text)) && (X.IsMatch(n5_2.Text)) &&
+                  (X.IsMatch(n5_3.Text)) && (X.IsMatch(n5_4.Text)) && (X.IsMatch(n6_1.Text)) && (X.IsMatch(n6_2.Text)) && (X.IsMatch(n6_3.Text)) && (X.IsMatch(n6_4.Text)) &&
+                  (X.IsMatch(n7_1.Text)) && (X.IsMatch(n7_2.Text)) && (X.IsMatch(n7_3.Text)) && (X.IsMatch(n7_4.Text)) && (X.IsMatch(n8_1.Text)) && (X.IsMatch(n8_2.Text)) &&
+                  (X.IsMatch(n8_3.Text)) && (X.IsMatch(n8_4.Text)) && (X.IsMatch(n9_1.Text)) && (X.IsMatch(n9_2.Text)) && (X.IsMatch(n9_3.Text)) && (X.IsMatch(n9_4.Text)) &&
+                  (X.IsMatch(k_t.Text)) && (X.IsMatch(k_s.Text)) && (X.IsMatch(o_n.Text)) && (X.IsMatch(p_p.Text)) && (X.IsMatch(v_r.Text)) && (X.IsMatch(Ri_t.Text)) && (X.IsMatch(Rn_t.Text)) && (X.IsMatch(H_t.Text)))
             {
-                int zh =Convert.ToInt32(box.SelectedItem);
-                //MessageBox.Show(Convert.ToString(zh));
-                var a = db.table.Where(c => c.Id == zh).FirstOrDefault();
-                a.o_s_base = 50;
-                db.SaveChanges();
 
+                using (Table_context db = new Table_context())
+                {
+                    if (string.IsNullOrWhiteSpace(k_t.Text) || string.IsNullOrWhiteSpace(k_s.Text) || string.IsNullOrWhiteSpace(o_n.Text) || string.IsNullOrWhiteSpace(p_p.Text) ||
+                         string.IsNullOrWhiteSpace(v_r.Text) || string.IsNullOrWhiteSpace(Ri_t.Text) || string.IsNullOrWhiteSpace(Rn_t.Text) || string.IsNullOrWhiteSpace(H_t.Text) ||
+                         string.IsNullOrWhiteSpace(n1_1.Text) || string.IsNullOrWhiteSpace(n1_2.Text) || string.IsNullOrWhiteSpace(n1_3.Text) || string.IsNullOrWhiteSpace(n1_4.Text) ||
+                         string.IsNullOrWhiteSpace(n2_1.Text) || string.IsNullOrWhiteSpace(n2_2.Text) || string.IsNullOrWhiteSpace(n2_3.Text) || string.IsNullOrWhiteSpace(n2_4.Text) ||
+                         string.IsNullOrWhiteSpace(n3_1.Text) || string.IsNullOrWhiteSpace(n3_2.Text) || string.IsNullOrWhiteSpace(n3_3.Text) || string.IsNullOrWhiteSpace(n3_4.Text) ||
+                         string.IsNullOrWhiteSpace(n4_1.Text) || string.IsNullOrWhiteSpace(n4_2.Text) || string.IsNullOrWhiteSpace(n4_3.Text) || string.IsNullOrWhiteSpace(n4_4.Text) ||
+                         string.IsNullOrWhiteSpace(n5_1.Text) || string.IsNullOrWhiteSpace(n5_2.Text) || string.IsNullOrWhiteSpace(n5_3.Text) || string.IsNullOrWhiteSpace(n5_4.Text) ||
+                         string.IsNullOrWhiteSpace(n6_1.Text) || string.IsNullOrWhiteSpace(n6_2.Text) || string.IsNullOrWhiteSpace(n6_3.Text) || string.IsNullOrWhiteSpace(n6_4.Text) ||
+                         string.IsNullOrWhiteSpace(n7_1.Text) || string.IsNullOrWhiteSpace(n7_2.Text) || string.IsNullOrWhiteSpace(n7_3.Text) || string.IsNullOrWhiteSpace(n7_4.Text) ||
+                         string.IsNullOrWhiteSpace(n8_1.Text) || string.IsNullOrWhiteSpace(n8_2.Text) || string.IsNullOrWhiteSpace(n8_3.Text) || string.IsNullOrWhiteSpace(n8_4.Text) ||
+                         string.IsNullOrWhiteSpace(n9_1.Text) || string.IsNullOrWhiteSpace(n9_2.Text) || string.IsNullOrWhiteSpace(n9_3.Text) || string.IsNullOrWhiteSpace(n9_4.Text)
+
+                         )
+                    {
+                        MessageBox.Show("Ошибка ввода!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        int zh = Convert.ToInt32(box.SelectedItem);
+                        var a = db.table.Where(c => c.Id == zh).FirstOrDefault();
+                        a.k_t_base = Convert.ToDouble(k_t.Text);
+                        a.k_s_base = Convert.ToDouble(k_s.Text);
+                        a.o_s_base = Convert.ToDouble(o_n.Text);
+                        a.p_p_base = Convert.ToDouble(p_p.Text);
+                        a.v_r_base = Convert.ToDouble(v_r.Text);
+                        a.ri_base = Convert.ToDouble(Ri_t.Text);
+                        a.rn_base = Convert.ToDouble(Rn_t.Text);
+                        a.h_base = Convert.ToDouble(H_t.Text);
+                        a.t1_1 = Convert.ToDouble(n1_1.Text); a.t1_2 = Convert.ToDouble(n1_2.Text); a.t1_3 = Convert.ToDouble(n1_3.Text); a.t1_4 = Convert.ToDouble(n1_4.Text);
+                        a.t2_1 = Convert.ToDouble(n2_1.Text); a.t2_2 = Convert.ToDouble(n2_2.Text); a.t2_3 = Convert.ToDouble(n2_3.Text); a.t2_4 = Convert.ToDouble(n2_4.Text);
+                        a.t3_1 = Convert.ToDouble(n3_1.Text); a.t3_2 = Convert.ToDouble(n3_2.Text); a.t3_3 = Convert.ToDouble(n3_3.Text); a.t3_4 = Convert.ToDouble(n3_4.Text);
+                        a.t4_1 = Convert.ToDouble(n4_1.Text); a.t4_2 = Convert.ToDouble(n4_2.Text); a.t4_3 = Convert.ToDouble(n4_3.Text); a.t4_4 = Convert.ToDouble(n4_4.Text);
+                        a.t5_1 = Convert.ToDouble(n5_1.Text); a.t5_2 = Convert.ToDouble(n5_2.Text); a.t5_3 = Convert.ToDouble(n5_3.Text); a.t5_4 = Convert.ToDouble(n5_4.Text);
+                        a.t6_1 = Convert.ToDouble(n6_1.Text); a.t6_2 = Convert.ToDouble(n6_2.Text); a.t6_3 = Convert.ToDouble(n6_3.Text); a.t6_4 = Convert.ToDouble(n6_4.Text);
+                        a.t7_1 = Convert.ToDouble(n7_1.Text); a.t7_2 = Convert.ToDouble(n7_2.Text); a.t7_3 = Convert.ToDouble(n7_3.Text); a.t7_4 = Convert.ToDouble(n7_4.Text);
+                        a.t8_1 = Convert.ToDouble(n8_1.Text); a.t8_2 = Convert.ToDouble(n8_2.Text); a.t8_3 = Convert.ToDouble(n8_3.Text); a.t8_4 = Convert.ToDouble(n8_4.Text);
+                        a.t9_1 = Convert.ToDouble(n9_1.Text); a.t9_2 = Convert.ToDouble(n9_2.Text); a.t9_3 = Convert.ToDouble(n9_3.Text); a.t9_4 = Convert.ToDouble(n9_4.Text);
+                        db.SaveChanges();
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ошибка ввода!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             }
 
-        /*
-private void grid_Loaded(object sender, RoutedEventArgs e)
-{
-   List<Table_content> result = new List<Table_content>(8);
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            if (MessageBox.Show("Закрыть расчёт?", "Запрос", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            { }
 
-   result.Add(new Table_content(1, 36, 0.0011, 0.0240));
-   result.Add(new Table_content(2, 36, 0.0011, 0.02574));
-   result.Add(new Table_content(3, 36, 0.0011, 0.2750));
-   result.Add(new Table_content(4, 36, 0.0011, 0.02925));
-   result.Add(new Table_content(5, 24, 0.0011, 0.031));
-   result.Add(new Table_content(6, 32, 0.0011, 0.03275));
-   result.Add(new Table_content(7, 32, 0.0011, 0.0345));
-   result.Add(new Table_content(8, 32, 0.0011, 0.03625));
-   result.Add(new Table_content(9, 32, 0.0011, 0.038));
-   grid.ItemsSource = result;
-   int parse = grid.SelectedIndex;
-   DataRowView rowView = grid.SelectedValue as DataRowView;
-
-
-}
-
-private void Button_Click_3(object sender, RoutedEventArgs e)
-{
-   Table_cell cell = new Table_cell();
-   string a;
-
-   a =Convert.ToString(cell.FindCell(0, 3, grid));
-   a = a.Substring(a.IndexOf(':') + 1);
-   MessageBox.Show(a);
-
-
-
-}*/
+            else e.Cancel = true;
+        }
+    }
 
     }
-}
+

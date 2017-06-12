@@ -54,7 +54,6 @@ namespace AR
                 Editor editor = new Editor();
                 editor.Show();
                 this.Close();
-                
             }
             else
             {
