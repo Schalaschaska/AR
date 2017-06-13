@@ -5,20 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AR"
         mc:Ignorable="d"
-        Title="Start_page" Height="350" Width="525">
+        Title="Start_page" Height="243.333" Width="357" MaxWidth="357" MaxHeight="243.333">
     <Grid>
-        <Menu Height="25" VerticalAlignment="Top">
-            <MenuItem Header="Файл">
-                <MenuItem Header="Начальная страница"></MenuItem>
-                <MenuItem Header="Выполнение расчёта"></MenuItem>
-                <MenuItem Header="Сохранение"></MenuItem>
-                <MenuItem Header="Загрузка"></MenuItem>
-                <MenuItem Header="Выход"></MenuItem>
-
-            </MenuItem>
-            <MenuItem Header="Вид" ></MenuItem>
-            <MenuItem Header="Настройка"></MenuItem>
-        </Menu>
         <Label x:Name="label_Copy" Content="Новый расчёт" FontSize="20" HorizontalAlignment="Left" Margin="13,30,0,0" VerticalAlignment="Top" Width="140"/>
         <ListBox x:Name="listBox1" HorizontalAlignment="Left" Height="133" Margin="13,67,0,0" VerticalAlignment="Top" Width="166">
             <Button x:Name="button" Content="Создать" Width="151" Click="button_Click"/>

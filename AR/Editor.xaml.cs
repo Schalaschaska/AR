@@ -33,13 +33,7 @@ namespace AR
         public Editor()
         {
             InitializeComponent();
-            
-
-
-
         }
-
-      
 
         public double yi;//Уравнения профиля коронки
         public double Vi=0;
@@ -51,26 +45,19 @@ namespace AR
         public double Ri;
         public double R0= 0.020;
         public double Ki=0;
-        public double f;
-        public int n;
+        public double f;//k трегия
+        public int n;//слой
         public int pr_n = 0;
-        public double pr_sum = 0;
-        public double H;
+        public double pr_sum = 0;//сумма_1
+        public double H;//нагрузка
         public double A;
         public int kol_e;
         public double[] RI_rez;
-        int[] NI = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-        double pr_sum_2 = 0;
+        int[] NI = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };//массив слоёв
+        double pr_sum_2 = 0;//сумма_2
         double max;
         public bool save_flag;
         int[] myArr = new int[] {  };
-        private void Start_click(object sender, RoutedEventArgs e)
-        {
-            
-            Start_page start_page = new Start_page();
-            start_page.Show();
-            this.Close();
-        }
         private void button_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(k_t.Text) || string.IsNullOrWhiteSpace(k_s.Text) || string.IsNullOrWhiteSpace(o_n.Text) || string.IsNullOrWhiteSpace(p_p.Text) ||
@@ -84,7 +71,6 @@ namespace AR
                    string.IsNullOrWhiteSpace(n7_1.Text) || string.IsNullOrWhiteSpace(n7_2.Text) || string.IsNullOrWhiteSpace(n7_3.Text) || string.IsNullOrWhiteSpace(n7_4.Text) ||
                    string.IsNullOrWhiteSpace(n8_1.Text) || string.IsNullOrWhiteSpace(n8_2.Text) || string.IsNullOrWhiteSpace(n8_3.Text) || string.IsNullOrWhiteSpace(n8_4.Text) ||
                    string.IsNullOrWhiteSpace(n9_1.Text) || string.IsNullOrWhiteSpace(n9_2.Text) || string.IsNullOrWhiteSpace(n9_3.Text) || string.IsNullOrWhiteSpace(n9_4.Text)
-
                    )
             { MessageBox.Show("Ошибка ввода!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Information); }
             else
@@ -211,7 +197,7 @@ namespace AR
                         max = AI.Max();
                         string date_time = DateTime.Now.ToString("dd MMMM yyyy HH:mm:ss");
                         string date_time_2 = DateTime.Now.ToString("dd MMMM yyyy HH-mm-ss");
-                        MessageBox.Show(Convert.ToString(max));
+                        //MessageBox.Show(Convert.ToString(max));
                         NetOffice.WordApi.Application word = new NetOffice.WordApi.Application();
                         word.DisplayAlerts = WdAlertLevel.wdAlertsNone;
                         NetOffice.WordApi.Document newdoc = word.Documents.Add();
@@ -220,8 +206,8 @@ namespace AR
                         word.Selection.TypeText("Исходные данные");
                         word.Selection.TypeParagraph();
                         NetOffice.WordApi.Table table = newdoc.Tables.Add(word.Selection.Range, n, 4);
-                        table.Borders.InsideLineStyle = WdLineStyle.wdLineStyleDashDotDot;
-                        table.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleDashDot;
+                        table.Borders.InsideLineStyle = WdLineStyle.wdLineStyleSingle;
+                        table.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleSingle;
                         for (int i = 0; i < n; i++)
                         {
                             for (int j = 1; j <= 1; j++)
@@ -258,15 +244,13 @@ namespace AR
 
                             }
                         }
-
-                        /*word.Selection.TypeParagraph();
-                        word.Selection.TypeText("Таблица результатов");*/
+                        word.Selection.TypeParagraph();
+                        word.Selection.TypeText("Таблица результатов");
                         word.Selection.EndKey(6);
                         word.Selection.TypeParagraph();
                         NetOffice.WordApi.Table table_2 = newdoc.Tables.Add(word.Selection.Range, kol_e, 3);
-
-                        table_2.Borders.InsideLineStyle = WdLineStyle.wdLineStyleDashDotDot;
-                        table_2.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleDashDot;
+                        table_2.Borders.InsideLineStyle = WdLineStyle.wdLineStyleSingle;
+                        table_2.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleSingle;
                         for (int i = 0; i < kol_e; i++)
                         {
                             for (int j = 1; j <= 1; j++)
@@ -293,20 +277,10 @@ namespace AR
 
                             }
                         }
+                        int indexMax = Array.IndexOf(AI, max);
                         word.Selection.EndKey(6);
                         word.Selection.TypeParagraph();
-                        //NetOffice.WordApi.Chart chart = new NetOffice.WordApi.Chart();
-                        //newdoc.Shapes.AddPicture(@"C:\an\test.jpg");
-                        //word.Selection.HomeKey(WdUnits.wdLine, WdMovementType.wdExtend);
-
-
-
-
-
-
-
-                        //word.Selection.Font.Bold = 1;
-                        //word.Selection.Font.Size = 18;
+                        word.Selection.TypeText("Максимальное значение А = "+Convert.ToString(max)+" при значении "+RI[indexMax]+" RI");
                         string fileExtension = GetDefaultExtension(word);//проверка версии
                         object documentFile = string.Format("{0}\\" + date_time_2 + "{1}", Directory.GetCurrentDirectory(), fileExtension);
                         newdoc.SaveAs(documentFile);
@@ -330,7 +304,7 @@ namespace AR
                     MessageBox.Show("Ошибка ввода!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
-        }
+        }//расчёт
         #region Helder
         private static string GetDefaultExtension(NetOffice.WordApi.Application application)
         {
@@ -451,7 +425,7 @@ namespace AR
         {
             n9_4.Text = Rn_t.Text;
         }
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)//сохраниение
         {
             Regex X = new Regex(@"^\d*(\,\d+)?$");
 
@@ -515,7 +489,7 @@ namespace AR
             }
 
         }
-        private void Button_Click_4(object sender, RoutedEventArgs e)
+        private void Button_Click_4(object sender, RoutedEventArgs e)//загрузка
         {
             using (Table_context db = new Table_context())
             {
@@ -543,7 +517,7 @@ namespace AR
             }
 
         }
-        private void ListBox_Loaded(object sender, RoutedEventArgs e)
+        private void ListBox_Loaded(object sender, RoutedEventArgs e)//заполнение listbox
         {
             using (Table_context db = new Table_context())
             {
@@ -554,7 +528,7 @@ namespace AR
                 box.Items.Add(s);
             }
         }
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void Button_Click_3(object sender, RoutedEventArgs e)//обновление
         {
             Regex X = new Regex(@"^\d*(\,\d+)?$");
 

@@ -7,20 +7,8 @@
         xmlns:local="clr-namespace:AR"
         mc:Ignorable="d"
         Title="Editor" Height="424" Width="537.133" Closing="Window_Closing" MaxWidth="537.133" MaxHeight="424">
-            
-    <Grid Name="Ed_grid">
-        <Menu Height="25" VerticalAlignment="Top">
-            <MenuItem Header="Файл">
-                <MenuItem Header="Начальная страница" Click="Start_click"></MenuItem>
-                <MenuItem Header="Выполнение расчёта"></MenuItem>
-                <MenuItem Header="Сохранение"></MenuItem>
-                <MenuItem Header="Загрузка"></MenuItem>
-                <MenuItem Header="Выход"></MenuItem>
 
-            </MenuItem>
-            <MenuItem Header="Вид" ></MenuItem>
-            <MenuItem Header="Настройка"></MenuItem>
-        </Menu>
+    <Grid Name="Ed_grid">
         <TextBox x:Name="k_t" HorizontalAlignment="Left" Height="23" Margin="191,53,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="k_s" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="191,87,0,0" TextChanged="k_s_TextChanged"/>
         <TextBox x:Name="o_n" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Margin="191,121,0,0"/>
@@ -75,7 +63,8 @@
         <Button Content="Загрузить" HorizontalAlignment="Left" Margin="25,304,0,0" VerticalAlignment="Top" Width="78" Height="25" Click="Button_Click_4"/>
         <ListBox HorizontalAlignment="Left" Height="58" Margin="191,325,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.187,-0.014" Loaded="ListBox_Loaded" Name="box"/>
         <Button Content="Обновить" HorizontalAlignment="Left" Margin="25,341,0,0" VerticalAlignment="Top" Width="78" Click="Button_Click_3" Height="24"/>
-        
+        <Image HorizontalAlignment="Left" Height="365" Margin="10,18,0,0" VerticalAlignment="Top" Width="509" Name="image1"/>
+
 
     </Grid>
 </Window>
