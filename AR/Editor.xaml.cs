@@ -147,10 +147,8 @@ namespace AR
                         RI_list.Add(Convert.ToDouble(n1_4.Text));
                         while (Ri <= Convert.ToDouble(n9_4.Text))
                         {
-
                             Ri = Ri + H;
                             RI_list.Add(Ri);
-
                             kol_e++;
 
                         }
@@ -161,12 +159,10 @@ namespace AR
                             yi = 2 * a * (RI[i] - R0);
                             YI_list.Add(yi);
 
-
                         }
                         double[] YI = YI_list.ToArray<double>();
                         for (int i = 0; i <= RI.Length - 1; i++)
                         {
-
                             Vi = 1 / (Math.Sqrt(1 + YI[i] * YI[i]));
                             VI_list.Add(Vi);
                         }
@@ -175,7 +171,6 @@ namespace AR
 
                         for (int i = 0; i <= n - 1; i++)
                         {
-
                             pr_sum = pr_sum + (KI_2[i] * DI_2[i] * Math.Pow(VI[i], 2));
                             pr_n++;
                         }
@@ -197,7 +192,6 @@ namespace AR
                         max = AI.Max();
                         string date_time = DateTime.Now.ToString("dd MMMM yyyy HH:mm:ss");
                         string date_time_2 = DateTime.Now.ToString("dd MMMM yyyy HH-mm-ss");
-                        //MessageBox.Show(Convert.ToString(max));
                         NetOffice.WordApi.Application word = new NetOffice.WordApi.Application();
                         word.DisplayAlerts = WdAlertLevel.wdAlertsNone;
                         NetOffice.WordApi.Document newdoc = word.Documents.Add();
@@ -244,10 +238,10 @@ namespace AR
 
                             }
                         }
-                        word.Selection.TypeParagraph();
-                        word.Selection.TypeText("Таблица результатов");
                         word.Selection.EndKey(6);
                         word.Selection.TypeParagraph();
+                        word.Selection.TypeParagraph();
+                        word.Selection.TypeText("Таблица результатов");
                         NetOffice.WordApi.Table table_2 = newdoc.Tables.Add(word.Selection.Range, kol_e, 3);
                         table_2.Borders.InsideLineStyle = WdLineStyle.wdLineStyleSingle;
                         table_2.Borders.OutsideLineStyle = WdLineStyle.wdLineStyleSingle;

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AR"
         mc:Ignorable="d"
-        Title="CreateWin" Height="300" Width="300">
+        Title="CreateWin" Height="300" Width="300" MaxWidth="300" MaxHeight="300">
     <Grid Name="Create_grid">
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="30,64,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="button" Content="Создать" HorizontalAlignment="Left" Margin="30,110,0,0" VerticalAlignment="Top" Width="75" Click="button_Click" RenderTransformOrigin="0.267,0.333"/>

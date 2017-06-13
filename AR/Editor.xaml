@@ -64,6 +64,13 @@
         <ListBox HorizontalAlignment="Left" Height="58" Margin="191,325,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.187,-0.014" Loaded="ListBox_Loaded" Name="box"/>
         <Button Content="Обновить" HorizontalAlignment="Left" Margin="25,341,0,0" VerticalAlignment="Top" Width="78" Click="Button_Click_3" Height="24"/>
         <Image HorizontalAlignment="Left" Height="365" Margin="10,18,0,0" VerticalAlignment="Top" Width="509" Name="image1"/>
+        <Label Content="R1" HorizontalAlignment="Left" Margin="157,236,0,0" VerticalAlignment="Top" Height="23" RenderTransformOrigin="0.561,0.797"/>
+        <Label Content="Rn" HorizontalAlignment="Left" Margin="157,264,0,0" VerticalAlignment="Top" Height="23" RenderTransformOrigin="0.561,0.797"/>
+        <Label Content="h" HorizontalAlignment="Left" Margin="157,292,0,0" VerticalAlignment="Top" Height="23" RenderTransformOrigin="0.561,0.797"/>
+        <Label Content="N" HorizontalAlignment="Left" Margin="318,27,0,0" VerticalAlignment="Top" Height="23" RenderTransformOrigin="5.157,-1.609"/>
+        <Label Content="Ki" HorizontalAlignment="Left" Margin="366,27,0,0" VerticalAlignment="Top" Height="23" RenderTransformOrigin="5.157,-1.609"/>
+        <Label Content="Di" HorizontalAlignment="Left" Margin="414,27,0,0" VerticalAlignment="Top" Height="23" RenderTransformOrigin="5.157,-1.609"/>
+        <Label Content="Ri" HorizontalAlignment="Left" Margin="461,27,0,0" VerticalAlignment="Top" Height="23" RenderTransformOrigin="5.157,-1.609"/>
 
 
     </Grid>
